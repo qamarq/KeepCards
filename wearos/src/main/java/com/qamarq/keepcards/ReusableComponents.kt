@@ -283,6 +283,130 @@ fun ButtonBackShowCard(
 }
 
 @Composable
+fun ShowCardButtonOpenPhone(
+    iconModifier: Modifier = Modifier,
+    navController: NavController,
+) {
+    Chip(
+        modifier = Modifier
+            .padding(top = 10.dp)
+            .fillMaxWidth(),
+        onClick = {
+            navController.navigate(Screen.SettingsScreen.route)
+        },
+        label = {
+            Text(
+                text = "Otwórz na telefonie",
+                maxLines = 2,
+                fontWeight = FontWeight.Medium,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        icon = {
+            Icon(
+                imageVector = Icons.Rounded.SendToMobile,
+                contentDescription = "Otwórz na telefonie",
+                modifier = iconModifier
+            )
+        },
+        colors = ChipDefaults.primaryChipColors(),
+    )
+}
+
+@Composable
+fun ShowCardButtonArchive(
+    iconModifier: Modifier = Modifier,
+    navController: NavController,
+) {
+    Chip(
+        modifier = Modifier
+            .padding(top = 4.dp)
+            .fillMaxWidth(),
+        onClick = {
+            navController.navigate(Screen.SettingsScreen.route)
+        },
+        label = {
+            Text(
+                text = "Archiwizuj",
+                maxLines = 1,
+                fontWeight = FontWeight.Medium,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        icon = {
+            Icon(
+                imageVector = Icons.Rounded.Archive,
+                contentDescription = "Archiwizuj",
+                modifier = iconModifier
+            )
+        },
+        colors = ChipDefaults.secondaryChipColors(),
+    )
+}
+
+@Composable
+fun ShowCardButtonDelete(
+    iconModifier: Modifier = Modifier,
+    navController: NavController,
+) {
+    Chip(
+        modifier = Modifier
+            .padding(top = 4.dp)
+            .fillMaxWidth(),
+        onClick = {
+            navController.navigate(Screen.SettingsScreen.route)
+        },
+        label = {
+            Text(
+                text = "Usuń kartę",
+                maxLines = 1,
+                fontWeight = FontWeight.Medium,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        icon = {
+            Icon(
+                imageVector = Icons.Rounded.Delete,
+                contentDescription = "Usuń kartę",
+                modifier = iconModifier
+            )
+        },
+        colors = ChipDefaults.secondaryChipColors(),
+    )
+}
+
+@Composable
+fun ShowCardButtonBack(
+    iconModifier: Modifier = Modifier,
+    navController: NavController,
+) {
+    Chip(
+        modifier = Modifier
+            .padding(top = 4.dp)
+            .fillMaxWidth(),
+        onClick = {
+            navController.navigate(Screen.SettingsScreen.route)
+        },
+        label = {
+            Text(
+                text = "Powrót",
+                maxLines = 1,
+                fontWeight = FontWeight.Medium,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        icon = {
+            Icon(
+                imageVector = Icons.Rounded.ArrowBack,
+                contentDescription = "Powrót",
+                modifier = iconModifier
+            )
+        },
+        colors = ChipDefaults.secondaryChipColors(),
+    )
+}
+
+@Composable
 fun MainBottomChipPrimary(
     iconModifier: Modifier = Modifier,
     context: Context,
@@ -292,8 +416,8 @@ fun MainBottomChipPrimary(
     if (isConnected) {
         Chip(
             modifier = Modifier
-                .padding(top = 10.dp)
-                .fillMaxWidth(),
+                .padding(top = 10.dp),
+//                .fillMaxWidth(),
             onClick = {
                 showDialog = true
                 val time = System.currentTimeMillis()
@@ -353,8 +477,7 @@ fun MainBottomChipSecondary(
 ) {
     Chip(
         modifier = Modifier
-            .padding(top = 2.dp)
-            .fillMaxWidth(),
+            .padding(top = 2.dp),
         onClick = {
             navController.navigate(Screen.SettingsScreen.route)
         },

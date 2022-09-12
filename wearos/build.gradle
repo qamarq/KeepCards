@@ -11,8 +11,8 @@ android {
         applicationId "com.qamarq.keepcards"
         minSdk 28
         targetSdk 32
-        versionCode 129
-        versionName "0.0.129 - wearos"
+        versionCode 131
+        versionName "0.0.131 - wearos"
     }
 
     buildTypes {

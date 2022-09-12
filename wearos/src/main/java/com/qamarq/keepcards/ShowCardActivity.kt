@@ -117,16 +117,20 @@ fun ShowCardActivity(navController: NavController, shopName: String?, productId:
                         BarcodeCard(contentModifier, globalBitmap)
                     }
                 }
-                item { ButtonBackShowCard(
-                    lastItemModifier,
-                    iconModifier,
-                    navController,
-                    context,
-                    shopName.toString(),
-                    productId.toString(),
-                    cardType.toString(),
-                    phoneConnected
-                ) }
+//                item { ButtonBackShowCard(
+//                    lastItemModifier,
+//                    iconModifier,
+//                    navController,
+//                    context,
+//                    shopName.toString(),
+//                    productId.toString(),
+//                    cardType.toString(),
+//                    phoneConnected
+//                ) }
+                item { ShowCardButtonOpenPhone(iconModifier, navController) }
+                item { ShowCardButtonArchive(iconModifier, navController) }
+                item { ShowCardButtonDelete(iconModifier, navController) }
+                item { ShowCardButtonBack(iconModifier, navController) }
             }
         }
     }
