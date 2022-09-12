@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/review"
+        android:icon="@drawable/ic_baseline_rate_review_24"
+        android:title="@string/favorite"
+        android:contentDescription="@string/favorite"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/more"
+        android:title="@string/more"
+        android:tint="?attr/colorControlNormal"
+        android:contentDescription="@string/more"
+        app:showAsAction="never" />
+
+</menu>

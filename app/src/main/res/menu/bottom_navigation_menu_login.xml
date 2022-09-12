@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/login"
+        android:enabled="true"
+        android:icon="@drawable/ic_outline_free_breakfast_24"
+        android:title="@string/login_menu_login"/>
+    <item
+        android:id="@+id/register"
+        android:enabled="true"
+        android:icon="@drawable/ic_outline_app_registration_24"
+        android:title="@string/login_menu_register"/>
+<!--    <item-->
+<!--        android:id="@+id/help"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_outline_help_center_24"-->
+<!--        android:title="@string/login_menu_help"/>-->
+</menu>

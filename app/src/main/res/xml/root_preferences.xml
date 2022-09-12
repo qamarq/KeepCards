@@ -1,0 +1,99 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--    <PreferenceCategory app:title="@string/messages_header">-->
+
+<!--        <EditTextPreference-->
+<!--            app:key="signature"-->
+<!--            app:title="@string/signature_title"-->
+<!--            app:useSimpleSummaryProvider="true" />-->
+
+<!--        <ListPreference-->
+<!--            app:defaultValue="reply"-->
+<!--            app:entries="@array/reply_entries"-->
+<!--            app:entryValues="@array/reply_values"-->
+<!--            app:key="reply"-->
+<!--            app:title="@string/reply_title"-->
+<!--            app:useSimpleSummaryProvider="true" />-->
+
+<!--    </PreferenceCategory>-->
+
+<!--    <PreferenceCategory app:title="@string/sync_header">-->
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:key="sync"-->
+<!--            app:title="@string/sync_title" />-->
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:dependency="sync"-->
+<!--            app:key="attachment"-->
+<!--            app:summaryOff="@string/attachment_summary_off"-->
+<!--            app:summaryOn="@string/attachment_summary_on"-->
+<!--            app:title="@string/attachment_title" />-->
+
+<!--    </PreferenceCategory>-->
+    <PreferenceCategory app:title="@string/app">
+        <SwitchPreferenceCompat
+            app:key="brightness"
+            app:defaultValue="true"
+            app:summaryOff=""
+            app:summaryOn="@string/settings_brightness_on"
+            app:title="@string/settings_brightness" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/wearos_title">
+        <SwitchPreferenceCompat
+            app:key="sync"
+            app:defaultValue="true"
+            app:title="@string/wearos_sync" />
+
+        <SwitchPreferenceCompat
+            app:dependency="sync"
+            app:key="notify_sync"
+            app:summaryOff="@string/wearos_sync_notif_off"
+            app:summaryOn=""
+            app:title="@string/wearos_sync_notif" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/update_title">
+
+        <SwitchPreferenceCompat
+            app:key="sync"
+            app:defaultValue="true"
+            app:summaryOff="@string/in_app_update_off"
+            app:summaryOn="@string/in_app_update_on"
+            app:title="@string/in_app_update" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/db">
+
+        <SwitchPreferenceCompat
+            app:key="db_offline"
+            app:defaultValue="true"
+            app:summaryOff="@string/db_off"
+            app:summaryOn="@string/db_on"
+            app:title="@string/db_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/theme_title">
+        <ListPreference
+            app:defaultValue="system"
+            app:entries="@array/theme_entries"
+            app:entryValues="@array/theme_values"
+            app:key="app_theme"
+            app:title="@string/app_theme"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:key="dynamic_colors"
+            app:defaultValue="true"
+            app:summaryOff="@string/dynamic_off"
+            app:summaryOn="@string/dynamic_on"
+            app:title="@string/dynamic_title" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

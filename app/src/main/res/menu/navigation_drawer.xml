@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/main_item"
+        android:title="@string/menu_item_nav">
+        <menu>
+            <item
+                android:id="@+id/menu_home"
+                android:icon="@drawable/ic_outline_home_24"
+                android:checked="true"
+                android:title="@string/menu_home"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/outbox_item"
+                android:icon="@drawable/ic_outline_local_offer_24"
+                android:title="@string/menu_offers"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/favourites_item"
+                android:icon="@drawable/ic_outline_people_24"
+                android:title="@string/menu_account"
+                android:checkable="true"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/info_item"
+        android:title="@string/menu_item_info">
+        <menu>
+            <item
+                android:id="@+id/floating"
+                android:icon="@drawable/ic_outline_style_24"
+                android:title="@string/menu_floating_window"
+                android:checkable="false" />
+            <item
+                android:id="@+id/settings"
+                android:icon="@drawable/ic_outline_settings_24"
+                android:title="@string/menu_settings"
+                android:checkable="false" />
+            <item
+                android:id="@+id/about"
+                android:icon="@drawable/ic_outline_perm_device_information_24"
+                android:title="@string/menu_about"
+                android:checkable="false" />
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_outline_exit_to_app_24"
+                android:title="@string/more"
+                android:checkable="false" />
+        </menu>
+    </item>
+</menu>

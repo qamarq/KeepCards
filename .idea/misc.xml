@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/keepcards-wearos/src/main/res/layout/activity_main.xml" value="0.5271966527196653" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable-v21/app_widget_background.xml" value="0.185" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable-v21/app_widget_inner_view_background.xml" value="0.185" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/bottom_sheet_background.xml" value="0.1535" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/button_background.xml" value="0.1775" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/dynamic_button.xml" value="0.121" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/floating_cards_bg.xml" value="0.152" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_barcode_fill0_wght400_grad0_opsz24.xml" value="0.1775" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_barcode_fill0_wght400_grad0_opsz48.xml" value="0.1775" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_card_giftcard_24.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_card_giftcard_widget_24.xml" value="0.1775" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.1535" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_content_copy_24.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_delete_outline_24.xml" value="0.1535" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_delete_outline_friend_24.xml" value="0.1535" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_mobile_friendly_24.xml" value="0.1535" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_no_accounts_24.xml" value="0.1535" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_rate_review_24.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_warning_amber_24.xml" value="0.1775" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_baseline_widgets_24.xml" value="0.1775" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_earth_americas_solid.xml" value="0.2635" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_github_brands.xml" value="0.2635" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_google_play_brands.xml" value="0.2635" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_instagram_brands.xml" value="0.2635" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_keep_card_logo_v3.xml" value="0.185" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_keepcard_icon_v2.xml" value="0.1775" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_paypal_brands.xml" value="0.185" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_qr_code_2_fill0_wght400_grad0_opsz24.xml" value="0.1775" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_qr_code_2_fill0_wght400_grad0_opsz48.xml" value="0.1775" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_report_fill0_wght400_grad0_opsz40.xml" value="0.1775" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_report_fill1_wght400_grad0_opsz48.xml" value="0.121" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_shopping_bag_fill0_wght700_grad0_opsz48__1_.xml" value="0.185" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/ic_storefront_fill0_wght400_grad0_opsz24.xml" value="0.2635" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/rounded.xml" value="0.185" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/testicon_background.xml" value="0.185" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/drawable/testicon_foreground.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_about.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_add.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_home.xml" value="0.21052631578947367" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_launch_floating.xml" value="0.21052631578947367" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_login_component.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_login_fragment.xml" value="0.176" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_register_component.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_register_fragment.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_request_floating.xml" value="0.21052631578947367" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_request_permission.xml" value="0.21052631578947367" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_reset_password_acitvity.xml" value="0.21052631578947367" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_scan_card.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_scanner.xml" value="0.21052631578947367" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/activity_test.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/barcode_widget.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/barcode_widget_configure.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/content_main.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/dynamicbutton.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/floating_cards_layout.xml" value="0.20964912280701756" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/fragment_first.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/fragment_fullscreen.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/fragment_home_account.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/fragment_home_cards.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/fragment_home_friends.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/fragment_login.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/fragment_search_friend.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/header_navigation_drawer.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/register.xml" value="0.22826086956521738" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/settings_activity.xml" value="0.21052631578947367" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/layout/share_bottom_sheet.xml" value="0.17142857142857143" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/menu/bottom_app_bar.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/menu/bottom_navigation_menu_login.xml" value="0.24895833333333334" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/menu/fullscreen_dialog.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/menu/navigation_drawer.xml" value="0.24895833333333334" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/menu/top_app_bar.xml" value="0.24895833333333334" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/menu/top_app_bar_scan.xml" value="0.24895833333333334" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2045" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/mipmap-anydpi-v26/testicon.xml" value="0.1775" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/mipmap-anydpi-v26/testicon_round.xml" value="0.1775" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/app/src/main/res/xml/root_preferences.xml" value="0.21052631578947367" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/keepcards-wearos/src/main/res/layout/activity_main.xml" value="0.5271966527196653" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/keepcards-wearos/src/main/res/layout/activity_scan_card.xml" value="0.176" />
+        <entry key="..\:/AndroidStudioProjects/KeepCards/keepcards-wearos/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.121" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

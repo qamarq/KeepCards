@@ -1,0 +1,10 @@
+<resources>
+    <string name="hello_world">Hello Round World!</string>
+    <string name="device_shape">Hello Round World!</string>
+    <string name="pick_your_card">Pick your card</string>
+    <string name="you_don_t_have_any_cards">Oops. You don\'t have any cards. Open the application on your phone. Synchronization will happen automatically.</string>
+    <string name="permission_dialog_title">Request for permissions</string>
+    <string name="permission_dialog_desc">Grant the app permission to edit system settings (screen brightness) in order to increase the screen brightness to the maximum value while showing your cards.</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+</resources>

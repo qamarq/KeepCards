@@ -1,0 +1,235 @@
+<resources>
+    <string name="app_name">Keep Cards</string>
+    <string name="app_desc">It is an application to store your loyalty cards in one place. You can access them in the app, widget, and Wear OS watch.</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="login_google">Login with Google</string>
+    <string name="login_email">Login with email</string>
+
+    <string name="hello">Welcome to our app. Log in!</string>
+
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="exit">Exit</string>
+
+    <string name="email">E-Mail Address</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="name_register">User Name</string>
+    <string name="login_btn">Log In to the application</string>
+    <string name="register_btn">Register Now</string>
+    <string name="remember_pass">Forgot password?</string>
+    <string name="valide_form">Check that all data are entered correctly</string>
+
+    <string name="fab_add">Add new card</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_account">Account</string>
+    <string name="menu_offers">Friends</string>
+
+    <string name="no_data_label">You currently have no cards added. Add your first card by clicking the button that says: "Add new card"</string>
+
+    <string name="login_menu_login">Login</string>
+    <string name="login_menu_register">Register</string>
+    <string name="login_menu_help">Help</string>
+
+    <string name="more">Log Out</string>
+    <string name="add">Add</string>
+    <string name="content_description_add">Add btn</string>
+    <string name="content_description_more">More btn</string>
+    <string name="logout_msg">Logged out successfully</string>
+
+    <string name="login_success">Logged in successfully</string>
+    <string name="login_error">Authentication failed</string>
+
+    <string name="dialog_title_warn">Look out!</string>
+    <string name="dialog_supporting_text_warn">To log in to our application, you must provide a valid email address and after clicking the registration button, click the link from your email for verification. After clicking, you will be able to log in.</string>
+    <string name="email_send">Email was sent. Check your mailbox</string>
+    <string name="cancel">Cancel</string>
+    <string name="verify">Verify</string>
+    <string name="show_card">Show card</string>
+    <string name="nextb">Next</string>
+    <string name="change">Change</string>
+    <string name="dialog_dynamic_title">Register error</string>
+    <string name="dialog_dynamic_desc">An error occurred during registration. Try again. The error may be due to the lapse of a link or incorrect data. If the error persists, you can write to us.</string>
+    <string name="dialog_dynamic_btn">Ok</string>
+
+    <string name="no_friends_label">You don\'t have any friends yet</string>
+    <string name="friend_details">Show details</string>
+    <string name="friend_delete">Delete friend</string>
+    <string name="success_friend_delete">Friend successfully removed</string>
+
+    <string name="link_dialog_title">One moment</string>
+    <string name="link_dialog_desc">Your account is being created</string>
+
+    <string name="dialog_null_title">Something is wrong</string>
+    <string name="dialog_null_desc">Ooops. It looks like you don\'t have any data saved in the database. You will now be logged out and will need to create an account again. If the bug persists, please report it to us.</string>
+
+    <string name="try_again">Timed out. Try again!</string>
+
+    <string name="pallete_fab">Scan &amp; Add</string>
+    <string name="done_fab">Done</string>
+    <string name="favorite">Review</string>
+
+    <string name="add_page_title">Add new card</string>
+    <string name="add_desc">To add a new card, you must enter your ID on the basis of which a barcode and the name of the store will be generated. Additionally, you can choose the color of the card</string>
+    <string name="add_shop_btn">Shop name</string>
+    <string name="add_client_btn">Client ID</string>
+    <string name="add_success">The card has been added successfully</string>
+
+    <string name="title_home">Cards</string>
+    <string name="title_friends">Friends</string>
+    <string name="title_account">Account</string>
+
+    <string name="add_note_fab">Write a note</string>
+    <string name="scan_desc">Scan this code at checkout</string>
+    <string name="client_id_desc">Client ID: </string>
+    <string name="copy_clientid">Copy Client ID</string>
+    <string name="scan_delete">Delete</string>
+    <string name="scan_copy">Copy</string>
+    <string name="scan_share">Share</string>
+    <string name="scan_fullscreen">Enlarge the code</string>
+    <string name="find_shop">Find shop</string>
+    <string name="find_shop_desc">Find the closest store thanks to Google Maps</string>
+    <string name="googlemaps_open">Find a Store</string>
+    <string name="delete_success">Successfully deleted</string>
+    <string name="change_data">Change name or Client ID</string>
+    <string name="success_copy">Client ID copied to clipboard</string>
+    <string name="change_data_desc">Here you can change your Client ID (barcode) or the display name of your shop. You can change both parameters simultaneously or individually.</string>
+    <string name="shop_placeholder">New name</string>
+    <string name="complete_text">You must complete the text</string>
+    <string name="success_change_shop">Store name successfully changed</string>
+    <string name="success_change_client">Client ID successfully changed</string>
+
+    <string name="change_client_id">Change Client ID</string>
+    <string name="change_client_desc">Here you can change your Client ID (barcode)</string>
+    <string name="client_placeholder">New Client ID</string>
+    <string name="update_shop">Update shop name</string>
+    <string name="update_clientid">Update Client ID</string>
+    <string name="update_all">Change all data</string>
+    <string name="change_codetype_title">Change code type</string>
+    <string name="change_codetype_desc">You can change your code type by selecting it below. Changes are saved immediately.</string>
+
+    <string name="menu_item_nav">Navigation</string>
+    <string name="menu_item_info">Info</string>
+    <string name="menu_friends">Friends</string>
+    <string name="menu_floating_window">Floating Cards</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_about">About the app and developer</string>
+
+
+    <string name="fab_friend">Add new friend</string>
+    <string name="add_friend">Add friend</string>
+    <string name="addfriend_desc">Send your friend a link with an invite to your friends</string>
+    <string name="addfriend_textinput">Invite ID</string>
+    <string name="addfriend_btn">Search user</string>
+    <string name="share_title">Share to friend</string>
+    <string name="view_inv">Show</string>
+    <string name="inv_title">You have new friend request</string>
+    <string name="inv_dialog_title">Friends requests</string>
+    <string name="inv_dialog_desc">These people sent you a friend request, you can delete or accept it</string>
+    <string name="inv_dialog_cancel">Cancel</string>
+    <string name="inv_dialog_delete">Discard</string>
+    <string name="inv_dialog_accept">Accept</string>
+    <string name="invite_message">Here is the link to add me to your friends in the Keep Cards app: %s</string>
+
+    <string name="coming_inv_title">Send friend request</string>
+    <string name="coming_inv_desc">You have received from %s the opportunity to send him an invitation to friends. Send invitation?</string>
+    <string name="coming_inv_desc_error">The invitation is invalid</string>
+    <string name="coming_inv_send">Send</string>
+    <string name="coming_inv_send_msg">Invitation sent</string>
+    <string name="send_inv_link">Send invitation link</string>
+
+    <string name="link_add_card_title">Add a new card?</string>
+    <string name="link_add_card_desc">Do you want to add a new card from the %s store with the customer number %s to your account</string>
+    <string name="link_add_card_send">Here is the link to add the %s store card to your Keep Cards account: %s</string>
+
+    <string name="card_add_req_title">New cards request</string>
+    <string name="card_add_req_toast">You have a new card from a friend</string>
+    <string name="card_add_req_send">%s received your card</string>
+
+    <string name="fab_account">Save profile</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure your widget</string>
+    <string name="configure_desc">Select the card you want to add to the home screen</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">Shop faster with your loyalty cards in one place</string>
+    <string name="sync">Sync with Wear OS</string>
+    <string name="dialog_sync_wearos_desc">If you have a Wear OS watch connected, you can install our application and synchronize your cards with the watch.</string>
+
+    <string name="barcode">Barcode</string>
+    <string name="qrcode">QR Code</string>
+
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="logout">Log out</string>
+    <string name="delete_account">Delete account and data</string>
+    <string name="new_pic_save">A new profile picture has been saved</string>
+
+    <string name="delete_account_title">Delete account?</string>
+    <string name="delete_account_desc">Are you sure you want to delete your account and all data? After this operation is performed, it cannot be restored!</string>
+
+    <string name="email_account">Email account</string>
+    <string name="google_account">Google Account</string>
+    <string name="connected_accounts">Connected accounts</string>
+
+    <string name="notification_new_friend_req">You have received a new friend request</string>
+    <string name="notification_new_card">You have received a new card from a friend. Check it in the app.</string>
+
+    <string name="wearos_title">WearOS</string>
+    <string name="wearos_sync">Sync with Wear OS watch</string>
+    <string name="wearos_sync_notif">Sync notification</string>
+    <string name="wearos_sync_notif_off">You will not be informed about it during synchronization</string>
+    <string name="wearos_sync_notif_on">You\'ll get a notification every time you sync</string>
+    <string name="update_title">Updates</string>
+    <string name="in_app_update">In-app updates</string>
+    <string name="in_app_update_off">To update the app, open Google Play</string>
+    <string name="in_app_update_on">If there is an update available, it will show up automatically when you use the application</string>
+    <string name="db">Database</string>
+    <string name="db_title">Storage of data on the device</string>
+    <string name="db_on">If you are online, the database is saved locally on the device and you can use the application while offline (it can increase the use of local memory)</string>
+    <string name="db_off">The data is only stored online</string>
+    <string name="theme_title">Theme</string>
+    <string name="app_theme">App theme</string>
+    <string name="dynamic_title">Dynamic colors</string>
+    <string name="dynamic_off">Default application colors</string>
+    <string name="dynamic_on">Application colors combined with the system theme (Android 12+)</string>
+    <string name="theme_entries_light">Light</string>
+    <string name="theme_entries_dark">Dark</string>
+    <string name="theme_entries_system">Sync with system</string>
+    <string name="version">Version: %s</string>
+    <string name="gplay" translatable="false">Google Play</string>
+    <string name="github" translatable="false">Github</string>
+    <string name="insta" translatable="false">Instagram</string>
+    <string name="website">Website</string>
+    <string name="discord">Creator Discord Server</string>
+    <string name="translate">Translate the application</string>
+    <string name="about">About</string>
+    <string name="permission_dialog_title">Request for permissions</string>
+    <string name="permission_dialog_desc">Grant the app permission to edit system settings (screen brightness) in order to increase the screen brightness to the maximum value while showing your cards.</string>
+    <string name="app">Application</string>
+    <string name="settings_brightness">Screen brightness</string>
+    <string name="settings_brightness_on">When showing a card, the screen brightness will be set to the highest value</string>
+    <string name="donate">Support the creator</string>
+    <string name="sync_notify">Your cards have been successfully synced to your watch</string>
+    <string name="f_activated">Function activated</string>
+    <string name="enable_features">Enable features</string>
+    <string name="floating_desc">Floating Cards allow you to use your cards anywhere in the system. All you need to do is select the icon of our application on the Android taskbar and a pop-up window will appear</string>
+    <string name="give_permission">Grant permissions</string>
+    <string name="permission_desc">The Keep Cards app requires the following permissions to run</string>
+    <string name="photo_perm_title">Access to the camera</string>
+    <string name="photo_perm_desc">We use camera permissions when scanning QR or barcodes to add them to the application. Photos are not saved or sent anywhere. This permission does not give us access to your gallery.</string>
+    <string name="chsystem_title">Change system settings</string>
+    <string name="chsystem_desc">The permissions to change system settings allow the application to set the phone screen to the maximum brightness when showing the screen with your card. This will make the scanning devices more frequent and easier to scan the card.</string>
+    <string name="on_top_title">Display on top</string>
+    <string name="on_top_desc">Floating Cards is used to display your cards without opening the application</string>
+    <string name="skip">Skip</string>
+    <string name="give_perm">Give the permission</string>
+    <string name="reset_pass_desc">If you have forgotten your password and have an account, you can change it by entering your email address below and clicking the link from the email.</string>
+    <string name="reset_pass_send">Send the link by email</string>
+</resources>

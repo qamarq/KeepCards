@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Keep Cards</string>
+    <string name="hello_world">hello world</string>
+    <string name="device_shape">Hello World!</string>
+    <string name="pick_your_card">Wybierz swoją kartę</string>
+    <string name="you_don_t_have_any_cards">Ups. Wygląda na to, że nie masz tu żadnych kard. Otwórz aplikację na telefonie a później na zegarku. Synchronizacja nastąpi automatycznie.</string>
+    <string name="permission_dialog_title">Prośba o uprawnienia</string>
+    <string name="permission_dialog_desc">Udziel aplikacji uprawnień do edycji ustawień systemowych (jasności ekranu) w celu podniesienia jasności ekranu do maksymalnej wartości podczas pokazywania Twoich kart.</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Anuluj</string>
+    <string name="phone_sync">Synchronizowanie z telefonem</string>
+    <string name="open_on_phone">Otwarto na telefonie</string>
+    <string name="settings">Ustawienia</string>
+    <string name="barcode">Kod kreskowy</string>
+    <string name="qrcode">Kod QR</string>
+    <string name="click_open">Kliknij aby otworzyć</string>
+    <string name="sync_error">Błąd synchronizacji</string>
+    <string name="phone_connection">Sprawdź połączenie z telefonem</string>
+    <string name="sync_error_desc">Podczas próby pobrania Twoich kart wystąpił błąd. Telefon nie odpowiada. Spróbuj otworzyć najpierw aplikację na telefonie i spróbować ponownie</string>
+    <string name="add_cards">Dodaj karty</string>
+    <string name="empty_cards">Na razie nic tu nie ma</string>
+    <string name="add_cards_desc">Kliknij aby w aplikacji na telefonie dodać swoją pierwszą kartę</string>
+    <string name="back">Powrót</string>
+    <string name="sync">Synchronizacja</string>
+    <string name="info">Informacje</string>
+    <string name="your_cards">Twoje karty</string>
+    <string name="check_update">Sprawdź aktualizacje</string>
+</resources>
