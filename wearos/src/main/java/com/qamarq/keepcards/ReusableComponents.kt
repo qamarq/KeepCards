@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.wear.compose.material.*
+import androidx.wear.compose.material.dialog.Alert
 import androidx.wear.compose.material.dialog.Confirmation
 import androidx.wear.compose.material.dialog.Dialog
 import com.qamarq.keepcards.theme.WearAppColorPalette
@@ -92,7 +93,6 @@ var firstTimeAlert = true
 fun ButtonSync(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
-    navController: NavController,
     context: Context,
     connectionState: Boolean
 ) {
@@ -136,9 +136,7 @@ fun ButtonSync(
                     showDialog2 = false
                 },
                 icon = {
-                    var atEnd by remember { mutableStateOf(false) }
                     DisposableEffect(Unit) {
-                        atEnd = true
                         onDispose {}
                     }
                     Image(
@@ -177,12 +175,7 @@ fun ButtonSync(
                     val time = System.currentTimeMillis()
                     MainActivity.sendData(context, "add_card|$time") },
                 icon = {
-                    // Initially, animation is static and shown at the start position (atEnd = false).
-                    // Then, we use the EffectAPI to trigger a state change to atEnd = true,
-                    // which plays the animation from start to end.
-                    var atEnd by remember { mutableStateOf(false) }
                     DisposableEffect(Unit) {
-                        atEnd = true
                         onDispose {}
                     }
                     Image(
@@ -262,9 +255,7 @@ fun ButtonBackShowCard(
                     // Initially, animation is static and shown at the start position (atEnd = false).
                     // Then, we use the EffectAPI to trigger a state change to atEnd = true,
                     // which plays the animation from start to end.
-                    var atEnd by remember { mutableStateOf(false) }
                     DisposableEffect(Unit) {
-                        atEnd = true
                         onDispose {}
                     }
                     Image(
@@ -285,45 +276,119 @@ fun ButtonBackShowCard(
 @Composable
 fun ShowCardButtonOpenPhone(
     iconModifier: Modifier = Modifier,
-    navController: NavController,
+    context: Context,
+    shopName: String,
+    productId: String,
+    cardType: String,
+    phoneConnected: Boolean
 ) {
-    Chip(
-        modifier = Modifier
-            .padding(top = 10.dp)
-            .fillMaxWidth(),
-        onClick = {
-            navController.navigate(Screen.SettingsScreen.route)
-        },
-        label = {
-            Text(
-                text = "Otwórz na telefonie",
-                maxLines = 2,
-                fontWeight = FontWeight.Medium,
-                overflow = TextOverflow.Ellipsis
-            )
-        },
-        icon = {
-            Icon(
-                imageVector = Icons.Rounded.SendToMobile,
-                contentDescription = "Otwórz na telefonie",
-                modifier = iconModifier
-            )
-        },
-        colors = ChipDefaults.primaryChipColors(),
-    )
+    var showDialog by remember { mutableStateOf(false) }
+    if (phoneConnected) {
+        Chip(
+            modifier = Modifier
+                .padding(top = 20.dp)
+                .fillMaxWidth(),
+            onClick = {
+                showDialog = true
+                val time = System.currentTimeMillis()
+                MainActivity.sendData(context, "open_card|$shopName|$productId|$cardType|$time")
+            },
+            label = {
+                Text(
+                    text = "Otwórz na telefonie",
+                    maxLines = 1,
+                    fontWeight = FontWeight.Medium,
+                    overflow = TextOverflow.Ellipsis
+                )
+            },
+            icon = {
+                Icon(
+                    imageVector = Icons.Rounded.SendToMobile,
+                    contentDescription = "Otwórz na telefonie",
+                    modifier = iconModifier
+                )
+            },
+            colors = ChipDefaults.primaryChipColors(),
+        )
+    }
+
+    Dialog(showDialog = showDialog, onDismissRequest = { showDialog = false }) {
+        Confirmation(
+            onTimeout = { showDialog = false },
+            icon = {
+                DisposableEffect(Unit) {
+                    onDispose {}
+                }
+                Image(
+                    colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
+                    painter = painterResource(id = R.drawable.ic_twotone_smartphone_24),
+                    contentDescription = stringResource(R.string.open_on_phone),
+                    modifier = Modifier.size(48.dp)
+                )
+            },
+            durationMillis = 3000,
+        ) {
+            Text(text = stringResource(R.string.open_on_phone), textAlign = TextAlign.Center)
+        }
+    }
 }
 
 @Composable
 fun ShowCardButtonArchive(
     iconModifier: Modifier = Modifier,
-    navController: NavController,
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+    Dialog(showDialog = showDialog, onDismissRequest = { showDialog = false }) {
+        Alert(
+            icon = {
+                Icon(
+                    imageVector = Icons.Rounded.Archive,
+                    contentDescription = "Archive",
+                    modifier = Modifier.size(28.dp).wrapContentSize(align = Alignment.Center),
+                )
+            },
+            title = { Text("Archiwizacja", textAlign = TextAlign.Center) },
+            negativeButton = {
+                Button(
+                    colors = ButtonDefaults.secondaryButtonColors(),
+                    onClick = {
+                        showDialog = false
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Close,
+                        contentDescription = "triggers phone action",
+                        modifier = iconModifier
+                    )
+                }
+            },
+            positiveButton = {
+                Button(onClick = {
+                    showDialog = false
+                }) {
+                    Icon(
+                        imageVector = Icons.Rounded.Done,
+                        contentDescription = "triggers phone action",
+                        modifier = iconModifier
+                    )
+                }
+            },
+            contentPadding =
+            PaddingValues(start = 10.dp, end = 10.dp, top = 24.dp, bottom = 32.dp),
+        ) {
+            Text(
+                text = "Czy chcesz zarchiwizować tą kartę?",
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+
     Chip(
         modifier = Modifier
             .padding(top = 4.dp)
             .fillMaxWidth(),
         onClick = {
-            navController.navigate(Screen.SettingsScreen.route)
+            showDialog = true
         },
         label = {
             Text(
@@ -347,14 +412,59 @@ fun ShowCardButtonArchive(
 @Composable
 fun ShowCardButtonDelete(
     iconModifier: Modifier = Modifier,
-    navController: NavController,
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+    Dialog(showDialog = showDialog, onDismissRequest = { showDialog = false }) {
+        Alert(
+            icon = {
+                Icon(
+                    imageVector = Icons.Rounded.Delete,
+                    contentDescription = "Delete",
+                    modifier = Modifier.size(28.dp).wrapContentSize(align = Alignment.Center),
+                )
+            },
+            title = { Text("Usuwanie", textAlign = TextAlign.Center) },
+            negativeButton = {
+                Button(
+                    colors = ButtonDefaults.secondaryButtonColors(),
+                    onClick = {
+                        showDialog = false
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Close,
+                        contentDescription = "triggers phone action",
+                        modifier = iconModifier
+                    )
+                }
+            },
+            positiveButton = {
+                Button(onClick = {
+                    showDialog = false
+                }) {
+                    Icon(
+                        imageVector = Icons.Rounded.Done,
+                        contentDescription = "triggers phone action",
+                        modifier = iconModifier
+                    )
+                }
+            },
+            contentPadding =
+            PaddingValues(start = 10.dp, end = 10.dp, top = 24.dp, bottom = 32.dp),
+        ) {
+            Text(
+                text = "Czy na pewno chcesz usunąć tą kartę?",
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+
     Chip(
         modifier = Modifier
             .padding(top = 4.dp)
             .fillMaxWidth(),
         onClick = {
-            navController.navigate(Screen.SettingsScreen.route)
+            showDialog = true
         },
         label = {
             Text(
@@ -385,7 +495,7 @@ fun ShowCardButtonBack(
             .padding(top = 4.dp)
             .fillMaxWidth(),
         onClick = {
-            navController.navigate(Screen.SettingsScreen.route)
+            navController.navigate(Screen.MainScreen.route)
         },
         label = {
             Text(
@@ -416,8 +526,8 @@ fun MainBottomChipPrimary(
     if (isConnected) {
         Chip(
             modifier = Modifier
-                .padding(top = 10.dp),
-//                .fillMaxWidth(),
+                .padding(top = 10.dp)
+                .fillMaxWidth(),
             onClick = {
                 showDialog = true
                 val time = System.currentTimeMillis()
@@ -448,12 +558,7 @@ fun MainBottomChipPrimary(
         Confirmation(
             onTimeout = { showDialog = false },
             icon = {
-                // Initially, animation is static and shown at the start position (atEnd = false).
-                // Then, we use the EffectAPI to trigger a state change to atEnd = true,
-                // which plays the animation from start to end.
-                var atEnd by remember { mutableStateOf(false) }
                 DisposableEffect(Unit) {
-                    atEnd = true
                     onDispose {}
                 }
                 Image(
@@ -477,7 +582,8 @@ fun MainBottomChipSecondary(
 ) {
     Chip(
         modifier = Modifier
-            .padding(top = 2.dp),
+            .padding(top = 2.dp)
+            .fillMaxWidth(),
         onClick = {
             navController.navigate(Screen.SettingsScreen.route)
         },
@@ -552,12 +658,7 @@ fun MainBottomButtons(
         Confirmation(
             onTimeout = { showDialog = false },
             icon = {
-                // Initially, animation is static and shown at the start position (atEnd = false).
-                // Then, we use the EffectAPI to trigger a state change to atEnd = true,
-                // which plays the animation from start to end.
-                var atEnd by remember { mutableStateOf(false) }
                 DisposableEffect(Unit) {
-                    atEnd = true
                     onDispose {}
                 }
                 Image(
@@ -611,7 +712,7 @@ fun AppInfoIcon(iconModifier: Modifier) {
 }
 
 @Composable
-fun AppInfoText1(modifier: Modifier = Modifier) {
+fun AppInfoText1() {
     Text(
         text = "Numer kompilacji",
         textAlign = TextAlign.Center,
@@ -633,19 +734,7 @@ fun AppInfoText2(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun BarcodeCard(modifier: Modifier = Modifier, globalBitmap: Bitmap) {
-//    Box(
-//        contentAlignment = Alignment.Center,
-//        modifier = Modifier
-//            .wrapContentHeight()
-//            .fillMaxWidth()
-//            .background(color = Color.White)
-//    ) {
-//        Image(bitmap = globalBitmap.asImageBitmap(), contentDescription = null,modifier = Modifier.fillMaxWidth().clip(
-//            RoundedCornerShape(10.dp)
-//        ))
-//    }
-
+fun BarcodeCard(globalBitmap: Bitmap) {
     Row(
         modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically,
@@ -664,18 +753,16 @@ fun TextSettings(modifier: Modifier = Modifier) {
     Text(
         modifier = modifier,
         textAlign = TextAlign.Center,
-//        color = MaterialTheme.colors.primary,
         color = Color.Gray,
         text = stringResource(R.string.settings)
     )
 }
 
 @Composable
-fun TextAppName(modifier: Modifier = Modifier) {
+fun TextAppName() {
     Text(
         modifier = Modifier.padding(bottom = 4.dp),
         textAlign = TextAlign.Center,
-//        color = MaterialTheme.colors.primary,
         text = stringResource(id = R.string.your_cards)
     )
 }
@@ -694,7 +781,6 @@ fun NewCard(
         appImage = {
             if (type == "barcode") {
                 Icon(
-//                    imageVector = Icons.Rounded.BarChart,
                     painter = painterResource(id = R.drawable.ic_barcode_scanner_fill0_wght400_grad0_opsz24),
                     contentDescription = "triggers open message action",
                     modifier = iconModifier
@@ -719,6 +805,48 @@ fun NewCard(
     ) {
         Text(stringResource(R.string.click_open))
     }
+//    Chip(
+//        modifier = modifier,
+//        enabled = true,
+//        onClick = { navController.navigate(Screen.ShowCardScreen.withArgs(shop, clientId, type)) },
+//        label = {
+//            Text(
+//                text = shop,
+//                maxLines = 1,
+//                overflow = TextOverflow.Ellipsis
+//            )
+//        },
+//        secondaryLabel= {
+//            if (type == "barcode") {
+//                Text(
+//                    text = stringResource(R.string.barcode),
+//                    maxLines = 1,
+//                    overflow = TextOverflow.Ellipsis
+//                )
+//            } else {
+//                Text(
+//                    text = stringResource(R.string.qrcode),
+//                    maxLines = 1,
+//                    overflow = TextOverflow.Ellipsis
+//                )
+//            }
+//        },
+//        icon = {
+//            if (type == "barcode") {
+//                Icon(
+//                    painter = painterResource(id = R.drawable.ic_barcode_scanner_fill0_wght400_grad0_opsz24),
+//                    contentDescription = "triggers open message action",
+//                    modifier = iconModifier
+//                )
+//            } else {
+//                Icon(
+//                    imageVector = Icons.Rounded.QrCode,
+//                    contentDescription = "triggers open message action",
+//                    modifier = iconModifier
+//                )
+//            }
+//        },
+//    )
 }
 
 @Composable
@@ -726,7 +854,6 @@ fun NewEmptyCard(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     type: String,
-    navController: NavController,
     context: Context
 ) {
     var showDialog by remember { mutableStateOf(false) }
@@ -734,9 +861,7 @@ fun NewEmptyCard(
         Confirmation(
             onTimeout = { showDialog = false },
             icon = {
-                var atEnd by remember { mutableStateOf(false) }
                 DisposableEffect(Unit) {
-                    atEnd = true
                     onDispose {}
                 }
                 Image(
@@ -799,7 +924,6 @@ fun NewEmptyCard(
 @Composable
 fun ChipBack(
     modifier: Modifier = Modifier,
-    iconModifier: Modifier = Modifier,
     navController: NavController
 ) {
 //    Chip(
@@ -855,12 +979,7 @@ fun ChipCheckUpdate(
                 MainActivity.sendData(context, "check_update|$time")
             },
             icon = {
-                // Initially, animation is static and shown at the start position (atEnd = false).
-                // Then, we use the EffectAPI to trigger a state change to atEnd = true,
-                // which plays the animation from start to end.
-                var atEnd by remember { mutableStateOf(false) }
                 DisposableEffect(Unit) {
-                    atEnd = true
                     onDispose {}
                 }
                 Image(

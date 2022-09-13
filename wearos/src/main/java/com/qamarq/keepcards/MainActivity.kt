@@ -29,6 +29,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.wear.compose.material.*
+import androidx.wear.compose.navigation.SwipeDismissableNavHost
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.android.gms.wearable.*
 import com.google.android.gms.wearable.DataClient.OnDataChangedListener
 import com.qamarq.keepcards.theme.WearAppTheme
@@ -42,11 +44,11 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
     var connected = false
     @Composable
     fun Navigation() {
-        val navController = rememberNavController()
+        val navController = rememberSwipeDismissableNavController()
         val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile,
             Context.MODE_PRIVATE)
         val storedCards = sharedPreferences.getString("storedCards","").toString()
-        NavHost(navController = navController, startDestination = Screen.MainScreen.route) {
+        SwipeDismissableNavHost(navController = navController, startDestination = Screen.MainScreen.route) {
             composable(route = Screen.SplashScreen.route) {
                 window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                 SplashActivity(false)
@@ -186,9 +188,6 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
                 val iconModifier = Modifier
                     .size(24.dp)
                     .wrapContentSize(align = Alignment.Center)
-                val firstItemModifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp, top = 14.dp)
 
                 ScalingLazyColumn(
                     modifier = Modifier
@@ -197,11 +196,11 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
                     state = listState
                 ) {
                     if (syncWear) {
-                        item { ButtonSync(contentModifier, iconModifier, navController, this@MainActivity, connected) }
+                        item { ButtonSync(contentModifier, iconModifier, this@MainActivity, connected) }
                     }
-                    item { TextAppName(contentModifier) }
+                    item { TextAppName() }
                     if (emptyCards) {
-                        item { NewEmptyCard(contentModifier, iconModifier, "sync", navController, this@MainActivity) }
+                        item { NewEmptyCard(contentModifier, iconModifier, "sync", this@MainActivity) }
                     } else {
                         var cardsCount = 0
                         list?.forEachIndexed { _, s ->
@@ -222,7 +221,7 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
                             }
                         }
                         if (cardsCount == 0) {
-                            item { NewEmptyCard(contentModifier, iconModifier, "empty", navController, this@MainActivity) }
+                            item { NewEmptyCard(contentModifier, iconModifier, "empty", this@MainActivity) }
                         }
                     }
 //                    item { MainBottomButtons(firstItemModifier, iconModifier, navController, this@MainActivity, connected) }

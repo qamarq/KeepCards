@@ -42,9 +42,6 @@ fun SettingsActivity(navController: NavController, context: Context) {
             val contentModifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp)
-            val iconModifier = Modifier
-                .size(24.dp)
-                .wrapContentSize(align = Alignment.Center)
             val firstItemModifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 10.dp, top = 20.dp)
@@ -58,10 +55,10 @@ fun SettingsActivity(navController: NavController, context: Context) {
                 item { ToggleChipSync(contentModifier, syncWear, sharedPreferences) }
 
 //                item { AppInfoIcon(iconModifier) }
-                item { AppInfoText1(contentModifier) }
+                item { AppInfoText1() }
                 item { AppInfoText2(contentModifier) }
                 item { ChipCheckUpdate(context) }
-                item { ChipBack(contentModifier, iconModifier, navController) }
+                item { ChipBack(contentModifier, navController) }
 //                item { ButtonBack(contentModifier, iconModifier) }
             }
         }

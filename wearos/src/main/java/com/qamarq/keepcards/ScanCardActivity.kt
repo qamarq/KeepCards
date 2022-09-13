@@ -51,7 +51,6 @@ class ScanCardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_scan_card)
         val curr_type = sharedPreferences.getString("curr_type","").toString()
         val productId = sharedPreferences.getString("curr_clientid","").toString()
-        val curr_shop = sharedPreferences.getString("curr_shop","").toString()
         manageBrightness()
 
         if (curr_type == "barcode") {

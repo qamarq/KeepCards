@@ -89,12 +89,6 @@ fun ShowCardActivity(navController: NavController, shopName: String?, productId:
                 )
             }
         ) {
-            val contentModifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-            val lastItemModifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp, bottom = 8.dp)
             val iconModifier = Modifier
                 .size(24.dp)
                 .wrapContentSize(align = Alignment.Center)
@@ -114,7 +108,7 @@ fun ShowCardActivity(navController: NavController, shopName: String?, productId:
                 }
                 item {
                     if (globalBitmap != null) {
-                        BarcodeCard(contentModifier, globalBitmap)
+                        BarcodeCard(globalBitmap)
                     }
                 }
 //                item { ButtonBackShowCard(
@@ -127,9 +121,9 @@ fun ShowCardActivity(navController: NavController, shopName: String?, productId:
 //                    cardType.toString(),
 //                    phoneConnected
 //                ) }
-                item { ShowCardButtonOpenPhone(iconModifier, navController) }
-                item { ShowCardButtonArchive(iconModifier, navController) }
-                item { ShowCardButtonDelete(iconModifier, navController) }
+                item { ShowCardButtonOpenPhone(iconModifier, context, shopName.toString(), productId.toString(), cardType.toString(), phoneConnected) }
+                item { ShowCardButtonArchive(iconModifier) }
+                item { ShowCardButtonDelete(iconModifier) }
                 item { ShowCardButtonBack(iconModifier, navController) }
             }
         }
