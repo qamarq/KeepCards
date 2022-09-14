@@ -1087,6 +1087,9 @@ fun ToggleChipSync(modifier: Modifier = Modifier, syncSettings: Boolean, setting
             editor.putBoolean("syncWear", it)
             editor.apply()
         },
+        secondaryLabel = {
+            Text("z telefonem", maxLines = 1, overflow = TextOverflow.Ellipsis)
+        },
         label = {
             Text(
                 text = stringResource(R.string.sync),
