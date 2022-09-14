@@ -582,7 +582,7 @@ fun MainBottomChipSecondary(
 ) {
     Chip(
         modifier = Modifier
-            .padding(top = 2.dp)
+            .padding(top = 5.dp)
             .fillMaxWidth(),
         onClick = {
             navController.navigate(Screen.SettingsScreen.route)
@@ -761,7 +761,7 @@ fun TextSettings(modifier: Modifier = Modifier) {
 @Composable
 fun TextAppName() {
     Text(
-        modifier = Modifier.padding(bottom = 4.dp),
+        modifier = Modifier.padding(bottom = 4.dp).fillMaxWidth(),
         textAlign = TextAlign.Center,
         text = stringResource(id = R.string.your_cards)
     )
@@ -805,6 +805,8 @@ fun NewCard(
     ) {
         Text(stringResource(R.string.click_open))
     }
+
+
 //    Chip(
 //        modifier = modifier,
 //        enabled = true,
@@ -1070,37 +1072,8 @@ fun ToggleChipExample(modifier: Modifier = Modifier) {
 @Composable
 fun ToggleChipSync(modifier: Modifier = Modifier, syncSettings: Boolean, settingsPrefs: SharedPreferences) {
     var checked by remember { mutableStateOf(syncSettings) }
-//    ToggleChip(
-//        modifier = modifier,
-//        checked = checked,
-//        toggleControl = {
-//            Icon(
-//                imageVector = ToggleChipDefaults.switchIcon(checked = checked),
-//                contentDescription = if (checked) "On" else "Off"
-//            )
-//        },
-//        onCheckedChange = {
-//            checked = it
-//            val editor: SharedPreferences.Editor = settingsPrefs.edit()
-//            editor.putBoolean("syncWear", it)
-//            editor.apply()
-//        },
-//        label = {
-//            Text(
-//                text = stringResource(R.string.sync),
-//                maxLines = 1,
-//                overflow = TextOverflow.Ellipsis
-//            )
-//        }
-//    )
-    SplitToggleChip(
+    ToggleChip(
         modifier = modifier,
-        label = {
-            Text("Synchronizacja", maxLines = 1, overflow = TextOverflow.Ellipsis)
-        },
-        secondaryLabel = {
-            Text("z telefonem", maxLines = 1, overflow = TextOverflow.Ellipsis)
-        },
         checked = checked,
         toggleControl = {
             Icon(
@@ -1114,11 +1087,40 @@ fun ToggleChipSync(modifier: Modifier = Modifier, syncSettings: Boolean, setting
             editor.putBoolean("syncWear", it)
             editor.apply()
         },
-        onClick = {
-            /* Do something */
-        },
-        enabled = true,
+        label = {
+            Text(
+                text = stringResource(R.string.sync),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
     )
+//    SplitToggleChip(
+//        modifier = modifier,
+//        label = {
+//            Text("Synchronizacja", maxLines = 1, overflow = TextOverflow.Ellipsis)
+//        },
+//        secondaryLabel = {
+//            Text("z telefonem", maxLines = 1, overflow = TextOverflow.Ellipsis)
+//        },
+//        checked = checked,
+//        toggleControl = {
+//            Icon(
+//                imageVector = ToggleChipDefaults.switchIcon(checked = checked),
+//                contentDescription = if (checked) "On" else "Off"
+//            )
+//        },
+//        onCheckedChange = {
+//            checked = it
+//            val editor: SharedPreferences.Editor = settingsPrefs.edit()
+//            editor.putBoolean("syncWear", it)
+//            editor.apply()
+//        },
+//        onClick = {
+//            /* Do something */
+//        },
+//        enabled = true,
+//    )
 }
 
 @Composable

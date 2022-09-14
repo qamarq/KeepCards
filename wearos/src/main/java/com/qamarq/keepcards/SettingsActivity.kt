@@ -58,7 +58,7 @@ fun SettingsActivity(navController: NavController, context: Context) {
                 item { AppInfoText1() }
                 item { AppInfoText2(contentModifier) }
                 item { ChipCheckUpdate(context) }
-                item { ChipBack(contentModifier, navController) }
+//                item { ChipBack(contentModifier, navController) }
 //                item { ButtonBack(contentModifier, iconModifier) }
             }
         }

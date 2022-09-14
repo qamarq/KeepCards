@@ -1,10 +1,10 @@
 package com.qamarq.keepcards
 
-import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
-import android.os.*
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.MotionEvent
 import android.view.ViewConfiguration
@@ -18,18 +18,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.core.view.InputDeviceCompat
 import androidx.core.view.MotionEventCompat
 import androidx.core.view.ViewConfigurationCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
+import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.google.android.gms.wearable.*
 import com.google.android.gms.wearable.DataClient.OnDataChangedListener
@@ -192,7 +189,9 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
                 ScalingLazyColumn(
                     modifier = Modifier
                         .fillMaxSize(),
-                    autoCentering = AutoCenteringParams(itemIndex = 0),
+//                    autoCentering = AutoCenteringParams(itemIndex = 0),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.Start,
                     state = listState
                 ) {
                     if (syncWear) {
