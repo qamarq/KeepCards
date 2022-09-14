@@ -1098,6 +1098,7 @@ fun ToggleChipSync(modifier: Modifier = Modifier, syncSettings: Boolean, setting
             )
         }
     )
+    
 //    SplitToggleChip(
 //        modifier = modifier,
 //        label = {
