@@ -179,6 +179,7 @@ class LoginActivity : AppCompatActivity() {
                 password_login_txt.setText("")
                 auth.signInWithEmailAndPassword(emailText, passText)
                     .addOnCompleteListener(this) { task ->
+                        Log.d("fdshkjfdshf", "tak: $task")
                         if (task.isSuccessful) {
                             val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile,Context.MODE_PRIVATE)
                             val editor:SharedPreferences.Editor =  sharedPreferences.edit()
@@ -191,6 +192,12 @@ class LoginActivity : AppCompatActivity() {
                             login_action_btn.isEnabled = true
                             Toast.makeText(baseContext, task.exception?.message.toString(), Toast.LENGTH_SHORT).show()
                         }
+                    }
+                    .addOnFailureListener(this) { err ->
+                        Log.d("fdshkjfdshf", "nie: $err")
+                    }
+                    .addOnCanceledListener(this) {
+                        Log.d("fdshkjfdshf", "cancel: $it")
                     }
             } else {
                 Toast.makeText(baseContext, R.string.valide_form, Toast.LENGTH_LONG).show()

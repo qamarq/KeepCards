@@ -109,7 +109,7 @@
                 android:id="@+id/client_id_txt"
                 android:singleLine="true"
                 android:nextFocusDown="@+id/acceptBtn"
-                android:inputType="number"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
