@@ -14,14 +14,14 @@ android {
             keyPassword 'Kamil.23082005.'
         }
     }
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.qamarq.keepcards"
         minSdk 26
-        targetSdk 32
-        versionCode 147
-        versionName "0.0.147"
+        targetSdk 33
+        versionCode 148
+        versionName "0.0.148"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

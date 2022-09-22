@@ -296,7 +296,6 @@ class ScanCardActivity : AppCompatActivity() {
                             val editor: SharedPreferences.Editor = sharedPreferences.edit()
                             editor.putString("curr_clientid",newClientID)
                             editor.apply()
-                            editor.commit()
                             Toast.makeText(this@ScanCardActivity, R.string.success_change_client, Toast.LENGTH_SHORT).show()
                             val i = Intent(this@ScanCardActivity, ScanCardActivity::class.java)
                             startActivity(i)

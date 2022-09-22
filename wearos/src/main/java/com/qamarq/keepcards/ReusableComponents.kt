@@ -412,8 +412,12 @@ fun ShowCardButtonArchive(
 @Composable
 fun ShowCardButtonDelete(
     iconModifier: Modifier = Modifier,
+    context: Context,
+    productId: String,
+    navController: NavController
 ) {
     var showDialog by remember { mutableStateOf(false) }
+    var showDialog2 by remember { mutableStateOf(false) }
     Dialog(showDialog = showDialog, onDismissRequest = { showDialog = false }) {
         Alert(
             icon = {
@@ -441,6 +445,9 @@ fun ShowCardButtonDelete(
             positiveButton = {
                 Button(onClick = {
                     showDialog = false
+                    val time = System.currentTimeMillis()
+                    MainActivity.sendData(context, "delete_card|$productId|$time")
+                    showDialog2 = true
                 }) {
                     Icon(
                         imageVector = Icons.Rounded.Done,
@@ -456,6 +463,29 @@ fun ShowCardButtonDelete(
                 text = "Czy na pewno chcesz usunąć tą kartę?",
                 textAlign = TextAlign.Center
             )
+        }
+    }
+
+    Dialog(showDialog = showDialog2, onDismissRequest = { showDialog2 = false }) {
+        Confirmation(
+            onTimeout = {
+                showDialog2 = false
+                navController.navigate(Screen.MainScreen.route)
+            },
+            icon = {
+                DisposableEffect(Unit) {
+                    onDispose {}
+                }
+                Image(
+                    colorFilter = ColorFilter.tint(MaterialTheme.colors.secondary),
+                    painter = painterResource(id = R.drawable.ic_baseline_done_24),
+                    contentDescription = stringResource(R.string.open_on_phone),
+                    modifier = Modifier.size(48.dp)
+                )
+            },
+            durationMillis = 2000,
+        ) {
+            Text(text = "Usunięto kartę", textAlign = TextAlign.Center)
         }
     }
 

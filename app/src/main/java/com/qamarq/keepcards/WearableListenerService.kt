@@ -10,6 +10,10 @@ import android.widget.Toast
 import androidx.preference.PreferenceManager
 import com.google.android.gms.wearable.*
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.Query
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -65,10 +69,30 @@ class DataLayerListenerService : WearableListenerService() {
                             editor.putString("curr_type",cardType)
                             editor.putString("curr_clientid",productId)
                             editor.apply()
-                            editor.commit()
                             val i = Intent(this, ScanCardActivity::class.java)
                             i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(i)
+                        } else if ("delete_card" in message) {
+                            val list = message.split("|")
+                            var productId = ""
+                            list.forEachIndexed { index, s ->
+                                when (index) {
+                                    1 -> { productId = s }
+                                }
+                            }
+                            val userId = Firebase.auth.currentUser?.uid
+                            val database = Firebase.database.reference
+                            val deleteQuery: Query = database.child("users").child(userId.toString()).child("cards").child(productId)
+                            deleteQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                    for (deleteSnapshot in dataSnapshot.children) {
+                                        deleteSnapshot.ref.removeValue()
+                                        sendCardsToWatch()
+//                                        Toast.makeText(this, R.string.sync_notify, Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                                override fun onCancelled(databaseError: DatabaseError) {}
+                            })
                         } else if ("check_connection" in message) {
                             val time = System.currentTimeMillis()
                             sendData("connection_success|$time")

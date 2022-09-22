@@ -288,6 +288,7 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
                         if (message.contains("open_card")) return
                         if (message.contains("check_connection")) return
                         if (message.contains("check_update")) return
+                        if (message.contains("delete_card")) return
                         if (message.contains("connection_success")) {
                             connected = true
                             return
