@@ -122,7 +122,7 @@ fun ShowCardActivity(navController: NavController, shopName: String?, productId:
 //                    phoneConnected
 //                ) }
                 item { ShowCardButtonOpenPhone(iconModifier, context, shopName.toString(), productId.toString(), cardType.toString(), phoneConnected) }
-                item { ShowCardButtonArchive(iconModifier) }
+                item { ShowCardButtonArchive(iconModifier, context, shopName.toString(), productId.toString(), cardType.toString(), navController) }
                 item { ShowCardButtonDelete(iconModifier, context, productId.toString(), navController) }
 //                item { ShowCardButtonBack(iconModifier, navController) }
             }

@@ -18,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.ColorInt
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
@@ -118,6 +119,24 @@ class ScanCardActivity : AppCompatActivity() {
                         override fun onCancelled(databaseError: DatabaseError) {
 
                         }
+                    })
+                    true
+                }
+                R.id.archive -> {
+                    val userId = Firebase.auth.currentUser?.uid
+                    val database = Firebase.database.reference
+                    val deleteQuery: Query = database.child("users").child(userId.toString()).child("cards").child(curr_clientid)
+                    deleteQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            for (deleteSnapshot in dataSnapshot.children) {
+                                deleteSnapshot.ref.removeValue()
+                                val card = HomeActivity.newCard(curr_clientid, curr_type, curr_shop)
+                                database.child("users").child(userId.toString()).child("archive").child(curr_clientid).setValue(card)
+                                val i = Intent(this@ScanCardActivity, ArchiveActivity::class.java)
+                                startActivity(i)
+                            }
+                        }
+                        override fun onCancelled(databaseError: DatabaseError) {}
                     })
                     true
                 }
@@ -331,7 +350,6 @@ class ScanCardActivity : AppCompatActivity() {
                             editor.putString("curr_clientid",newClientID)
                             editor.putString("curr_shop",shopName)
                             editor.apply()
-                            editor.commit()
                             val i = Intent(this@ScanCardActivity, ScanCardActivity::class.java)
                             startActivity(i)
                         }
@@ -351,26 +369,20 @@ class ScanCardActivity : AppCompatActivity() {
         val settingsPrefs = PreferenceManager.getDefaultSharedPreferences(this)
         val brightness = settingsPrefs.getBoolean("brightness", true)
         if (brightness) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (!Settings.System.canWrite(this)) {
-                    MaterialAlertDialogBuilder(this)
-                        .setTitle(R.string.permission_dialog_title)
-                        .setMessage(R.string.permission_dialog_desc)
-                        .setPositiveButton(resources.getString(R.string.dialog_dynamic_btn)) { dialog, _ ->
-                            dialog.cancel()
-                            val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
-                            intent.data = Uri.parse("package:$packageName")
-                            startActivity(intent)
-                        }
-                        .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
-                            dialog.cancel()
-                        }
-                        .show()
-                } else {
-                    val cResolver = contentResolver
-                    defaultBrightness = Settings.System.getInt(cResolver, Settings.System.SCREEN_BRIGHTNESS)
-                    Settings.System.putInt(cResolver, Settings.System.SCREEN_BRIGHTNESS, 255)
-                }
+            if (!Settings.System.canWrite(this)) {
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.permission_dialog_title)
+                    .setMessage(R.string.permission_dialog_desc)
+                    .setPositiveButton(resources.getString(R.string.dialog_dynamic_btn)) { dialog, _ ->
+                        dialog.cancel()
+                        val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
+                        intent.data = Uri.parse("package:$packageName")
+                        startActivity(intent)
+                    }
+                    .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                        dialog.cancel()
+                    }
+                    .show()
             } else {
                 val cResolver = contentResolver
                 defaultBrightness = Settings.System.getInt(cResolver, Settings.System.SCREEN_BRIGHTNESS)
@@ -383,12 +395,7 @@ class ScanCardActivity : AppCompatActivity() {
         val settingsPrefs = PreferenceManager.getDefaultSharedPreferences(this)
         val brightness = settingsPrefs.getBoolean("brightness", true)
         if (brightness) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (Settings.System.canWrite(this)) {
-                    val cResolver = contentResolver
-                    Settings.System.putInt(cResolver, Settings.System.SCREEN_BRIGHTNESS, defaultBrightness)
-                }
-            } else {
+            if (Settings.System.canWrite(this)) {
                 val cResolver = contentResolver
                 Settings.System.putInt(cResolver, Settings.System.SCREEN_BRIGHTNESS, defaultBrightness)
             }
@@ -402,6 +409,7 @@ class ScanCardActivity : AppCompatActivity() {
         val userId = Firebase.auth.currentUser?.uid
 
         database.child("users").child(userId.toString()).child("friends").addValueEventListener(object : ValueEventListener {
+            @RequiresApi(Build.VERSION_CODES.S)
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var emptyData: Boolean = true
                 globalDialog?.horizontalScroll_linear?.removeAllViews()

@@ -335,9 +335,15 @@ fun ShowCardButtonOpenPhone(
 
 @Composable
 fun ShowCardButtonArchive(
-    iconModifier: Modifier = Modifier,
+    modifier: Modifier = Modifier,
+    context: Context,
+    shopName: String,
+    productId: String,
+    cardType: String,
+    navController: NavController
 ) {
     var showDialog by remember { mutableStateOf(false) }
+    var showDialog2 by remember { mutableStateOf(false) }
     Dialog(showDialog = showDialog, onDismissRequest = { showDialog = false }) {
         Alert(
             icon = {
@@ -358,18 +364,21 @@ fun ShowCardButtonArchive(
                     Icon(
                         imageVector = Icons.Rounded.Close,
                         contentDescription = "triggers phone action",
-                        modifier = iconModifier
+                        modifier = modifier
                     )
                 }
             },
             positiveButton = {
                 Button(onClick = {
                     showDialog = false
+                    val time = System.currentTimeMillis()
+                    MainActivity.sendData(context, "archive_card|$shopName|$productId|$cardType|$time")
+                    showDialog2 = true
                 }) {
                     Icon(
                         imageVector = Icons.Rounded.Done,
                         contentDescription = "triggers phone action",
-                        modifier = iconModifier
+                        modifier = modifier
                     )
                 }
             },
@@ -380,6 +389,29 @@ fun ShowCardButtonArchive(
                 text = "Czy chcesz zarchiwizować tą kartę?",
                 textAlign = TextAlign.Center
             )
+        }
+    }
+
+    Dialog(showDialog = showDialog2, onDismissRequest = { showDialog2 = false }) {
+        Confirmation(
+            onTimeout = {
+                showDialog2 = false
+                navController.navigate(Screen.MainScreen.route)
+            },
+            icon = {
+                DisposableEffect(Unit) {
+                    onDispose {}
+                }
+                Image(
+                    colorFilter = ColorFilter.tint(MaterialTheme.colors.secondary),
+                    painter = painterResource(id = R.drawable.ic_baseline_done_24),
+                    contentDescription = stringResource(R.string.open_on_phone),
+                    modifier = Modifier.size(48.dp)
+                )
+            },
+            durationMillis = 2000,
+        ) {
+            Text(text = "Zarchiwizowano kartę", textAlign = TextAlign.Center)
         }
     }
 
@@ -402,7 +434,7 @@ fun ShowCardButtonArchive(
             Icon(
                 imageVector = Icons.Rounded.Archive,
                 contentDescription = "Archiwizuj",
-                modifier = iconModifier
+                modifier = modifier
             )
         },
         colors = ChipDefaults.secondaryChipColors(),
@@ -411,7 +443,7 @@ fun ShowCardButtonArchive(
 
 @Composable
 fun ShowCardButtonDelete(
-    iconModifier: Modifier = Modifier,
+    modifier: Modifier = Modifier,
     context: Context,
     productId: String,
     navController: NavController
@@ -438,7 +470,7 @@ fun ShowCardButtonDelete(
                     Icon(
                         imageVector = Icons.Rounded.Close,
                         contentDescription = "triggers phone action",
-                        modifier = iconModifier
+                        modifier = modifier
                     )
                 }
             },
@@ -452,7 +484,7 @@ fun ShowCardButtonDelete(
                     Icon(
                         imageVector = Icons.Rounded.Done,
                         contentDescription = "triggers phone action",
-                        modifier = iconModifier
+                        modifier = modifier
                     )
                 }
             },
@@ -508,7 +540,7 @@ fun ShowCardButtonDelete(
             Icon(
                 imageVector = Icons.Rounded.Delete,
                 contentDescription = "Usuń kartę",
-                modifier = iconModifier
+                modifier = modifier
             )
         },
         colors = ChipDefaults.secondaryChipColors(),

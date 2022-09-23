@@ -90,7 +90,34 @@ class DataLayerListenerService : WearableListenerService() {
                                         sendCardsToWatch()
                                         val notifying = settingsPrefs.getBoolean("notify_delete", false)
                                         if (notifying) Toast.makeText(this@DataLayerListenerService, R.string.delete_notify, Toast.LENGTH_SHORT).show()
-//                                        Toast.makeText(this, R.string.sync_notify, Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                                override fun onCancelled(databaseError: DatabaseError) {}
+                            })
+                        } else if ("archive_card" in message) {
+                            val list = message.split("|")
+                            var shopName = ""
+                            var productId = ""
+                            var cardType = ""
+                            list.forEachIndexed { index, s ->
+                                when (index) {
+                                    1 -> { shopName = s }
+                                    2 -> { productId = s }
+                                    3 -> { cardType = s }
+                                }
+                            }
+                            val userId = Firebase.auth.currentUser?.uid
+                            val database = Firebase.database.reference
+                            val deleteQuery: Query = database.child("users").child(userId.toString()).child("cards").child(productId)
+                            deleteQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                    for (deleteSnapshot in dataSnapshot.children) {
+                                        deleteSnapshot.ref.removeValue()
+                                        sendCardsToWatch()
+                                        val card = HomeActivity.newCard(productId, cardType, shopName)
+                                        database.child("users").child(userId.toString()).child("archive").child(productId).setValue(card)
+                                        val notifying = settingsPrefs.getBoolean("notify_archive", false)
+                                        if (notifying) Toast.makeText(this@DataLayerListenerService, R.string.archive_notify, Toast.LENGTH_SHORT).show()
                                     }
                                 }
                                 override fun onCancelled(databaseError: DatabaseError) {}

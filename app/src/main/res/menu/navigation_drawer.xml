@@ -26,10 +26,15 @@
         android:id="@+id/info_item"
         android:title="@string/menu_item_info">
         <menu>
+<!--            <item-->
+<!--                android:id="@+id/floating"-->
+<!--                android:icon="@drawable/ic_outline_style_24"-->
+<!--                android:title="@string/menu_floating_window"-->
+<!--                android:checkable="false" />-->
             <item
-                android:id="@+id/floating"
-                android:icon="@drawable/ic_outline_style_24"
-                android:title="@string/menu_floating_window"
+                android:id="@+id/archive"
+                android:icon="@drawable/ic_outline_archive_24"
+                android:title="Archiwum"
                 android:checkable="false" />
             <item
                 android:id="@+id/settings"

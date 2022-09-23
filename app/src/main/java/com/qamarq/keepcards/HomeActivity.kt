@@ -1,6 +1,5 @@
 package com.qamarq.keepcards
 
-import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -19,11 +18,11 @@ import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.view.isVisible
-import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
@@ -99,13 +98,17 @@ class HomeActivity : AppCompatActivity() {
             .child(userId.toString())
             .child("notify_id").setValue(onesignalUserId)
         extended_fab.setOnClickListener { view ->
-            if (fabActualMode == "home") {
-                val i = Intent(this@HomeActivity, AddActivity::class.java)
-                startActivity(i)
-            } else if (fabActualMode == "friends") {
-                SearchFriendFragment.display(supportFragmentManager)
-            } else if (fabActualMode == "account") {
-//                saveProfileData()
+            when (fabActualMode) {
+                "home" -> {
+                    val i = Intent(this@HomeActivity, AddActivity::class.java)
+                    startActivity(i)
+                }
+                "friends" -> {
+                    SearchFriendFragment.display(supportFragmentManager)
+                }
+                "account" -> {
+        //                saveProfileData()
+                }
             }
         }
 
@@ -117,8 +120,12 @@ class HomeActivity : AppCompatActivity() {
             menuItem.isChecked = true
             drawerLayout.close()
             when (menuItem.itemId) {
-                R.id.floating -> {
-                    val i = Intent(this@HomeActivity, RequestFloatingActivity::class.java)
+//                R.id.floating -> {
+//                    val i = Intent(this@HomeActivity, RequestFloatingActivity::class.java)
+//                    startActivity(i)
+//                }
+                R.id.archive -> {
+                    val i = Intent(this@HomeActivity, ArchiveActivity::class.java)
                     startActivity(i)
                 }
                 R.id.settings -> {
@@ -230,7 +237,6 @@ class HomeActivity : AppCompatActivity() {
             if (!emailLoged) email_chip.visibility = View.GONE
             if (!googleLoged) google_chip.visibility = View.GONE
             editor.apply()
-            editor.commit()
             header_email.text = myEmail
             if (it.value == null) {
                 MaterialAlertDialogBuilder(this)
@@ -774,6 +780,7 @@ class HomeActivity : AppCompatActivity() {
         val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile,
             Context.MODE_PRIVATE)
         database.child("users").child(userId.toString()).child("cards").addValueEventListener(object : ValueEventListener {
+            @RequiresApi(Build.VERSION_CODES.S)
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var emptyData: Boolean = true
                 progressBar.visibility = View.GONE
@@ -805,7 +812,6 @@ class HomeActivity : AppCompatActivity() {
                         editor.putString("curr_type",type)
                         editor.putString("curr_clientid",clientid)
                         editor.apply()
-                        editor.commit()
                         val i = Intent(this@HomeActivity, ScanCardActivity::class.java)
                         startActivity(i)
                     }
@@ -880,8 +886,8 @@ class HomeActivity : AppCompatActivity() {
                 var lastCard: MaterialCardView? = null
                 dataSnapshot.children.forEach {
                     emptyData = false
-                    val name = it.child("name").getValue().toString()
-                    val email = it.child("email").getValue().toString()
+                    val name = it.child("name").value.toString()
+                    val email = it.child("email").value.toString()
                     val friendId = it.key.toString()
 
                     friendsLayout.orientation = LinearLayout.VERTICAL
@@ -1026,7 +1032,7 @@ class HomeActivity : AppCompatActivity() {
         val ref = storage.reference.child("profiles/$userId/avatar.jpg")
         var uploadTask = ref.putBytes(data)
         uploadTask.addOnFailureListener {
-        }.addOnSuccessListener { taskSnapshot ->
+        }.addOnSuccessListener {
             val parentLayout = findViewById<View>(android.R.id.content)
             Snackbar.make(parentLayout, R.string.new_pic_save, Snackbar.LENGTH_LONG)
                 .setAnchorView(R.id.extended_fab)
@@ -1040,16 +1046,16 @@ class HomeActivity : AppCompatActivity() {
 
     private fun profileFragementCode() {
         avatar_imgview.setOnClickListener {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
-//                val intent = Intent(MediaStore.ACTION_PICK_IMAGES)
-//                intent.type = "image/*"
-//                startActivityForResult(intent, pickImage)
-//            } else {
-//                val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-//                startActivityForResult(gallery, pickImage)
-//            }
-            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-            startActivityForResult(gallery, pickImage)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+                val intent = Intent(MediaStore.ACTION_PICK_IMAGES)
+                intent.type = "image/*"
+                startActivityForResult(intent, pickImage)
+            } else {
+                val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+                startActivityForResult(gallery, pickImage)
+            }
+//            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+//            startActivityForResult(gallery, pickImage)
         }
     }
 
@@ -1068,20 +1074,5 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun popupSnackbarForCompleteUpdate() {
-        val parentLayout = findViewById<View>(android.R.id.content)
-        val snackbar = Snackbar.make(
-            parentLayout,
-            "New app is ready!",
-            Snackbar.LENGTH_INDEFINITE
-        )
-        snackbar.setAction("Install") { view: View? ->
-            if (mAppUpdateManager != null) {
-                mAppUpdateManager!!.completeUpdate()
-            }
-        }
-        snackbar.setActionTextColor(resources.getColor(com.google.android.material.R.attr.colorPrimary))
-        snackbar.show()
-    }
 
 }

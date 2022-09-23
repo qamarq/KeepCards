@@ -62,6 +62,13 @@
             app:summaryOn="@string/wearos_delete_notif_on"
             app:title="@string/wearos_sync_delete" />
 
+        <SwitchPreferenceCompat
+            app:dependency="sync"
+            app:key="notify_archive"
+            app:summaryOff="@string/wearos_archive_notif_off"
+            app:summaryOn="@string/wearos_archive_notif_on"
+            app:title="@string/wearos_sync_archive" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/update_title">

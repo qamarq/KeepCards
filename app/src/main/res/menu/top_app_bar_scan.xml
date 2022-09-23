@@ -17,6 +17,13 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/archive"
+        android:icon="@drawable/ic_baseline_archive_24"
+        android:title="Archiwizuj"
+        android:contentDescription="Archiwizuj"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/delete"
         android:icon="@drawable/ic_baseline_delete_24"
         android:title="@string/scan_delete"

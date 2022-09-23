@@ -285,20 +285,11 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
                     val editor:SharedPreferences.Editor = sharedPreferences.edit()
 //                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                     if (message != null) {
-                        if (message.contains("give_me_cards")) return
-                        if (message.contains("add_card")) return
-                        if (message.contains("open_card")) return
-                        if (message.contains("check_connection")) return
-                        if (message.contains("check_update")) return
-                        if (message.contains("delete_card")) return
-                        if (message.contains("connection_success")) {
-                            connected = true
-                            return
+                        val commands = listOf("give_me_cards", "add_card", "open_card", "check_connection", "check_update", "archive_card", "delete_card")
+                        for (command in commands) {
+                            if (message.contains(command)) return
                         }
-                        if (message.contains("connection_success")) {
-                            connected = true
-                            return
-                        }
+                        if (message.contains("connection_success")) {connected = true; return}
                     }
                     editor.putString("storedCards",message)
                     editor.apply()
