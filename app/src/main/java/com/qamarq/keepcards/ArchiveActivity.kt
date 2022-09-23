@@ -35,7 +35,7 @@ class ArchiveActivity : AppCompatActivity() {
 
         val userId = Firebase.auth.currentUser?.uid
         val database = Firebase.database.reference
-        dynamicArchive.orientation = LinearLayout.VERTICAL
+
         archiveAppBar.setNavigationOnClickListener {
             val i = Intent(this@ArchiveActivity, HomeActivity::class.java)
             startActivity(i)
@@ -52,12 +52,13 @@ class ArchiveActivity : AppCompatActivity() {
                     val shop = it.child("shop").value.toString()
                     val type = it.child("type").value.toString()
                     val clientid = it.child("clientid").value.toString()
+                    Log.d("fdshkfhdsjf", shop)
 
                     val card = MaterialCardView(this@ArchiveActivity, null, R.attr.materialCardViewElevatedStyle)
                     card.layoutParams =
                         LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                     val param = card.layoutParams as ViewGroup.MarginLayoutParams
-                    param.setMargins(50,20,50,20)
+                    param.setMargins(8,8,8,8)
                     card.layoutParams = param
                     lastCard = card
 
@@ -82,14 +83,14 @@ class ArchiveActivity : AppCompatActivity() {
                     val firstDp = getPixelsFromDP(30)
                     val param2 = card.layoutParams as ViewGroup.MarginLayoutParams
                     param2.setMargins(0,0,10,0)
+                    param2.height = 30
+                    param2.width = 30
                     card.layoutParams = param2
-                    icon.layoutParams.height = 30
-                    icon.layoutParams.width = 30
                     val typedValue = TypedValue()
                     val theme: Theme = this@ArchiveActivity.theme
                     theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue, true)
                     @ColorInt val color = typedValue.data
-                    icon.setColorFilter(ContextCompat.getColor(this@ArchiveActivity, color), android.graphics.PorterDuff.Mode.SRC_IN)
+//                    icon.setColorFilter(ContextCompat.getColor(this@ArchiveActivity, color), android.graphics.PorterDuff.Mode.SRC_IN)
                     if (type == "barcode") {
                         icon.setImageResource(R.drawable.ic_barcode_fill0_wght400_grad0_opsz48)
                     } else {
@@ -201,30 +202,6 @@ class ArchiveActivity : AppCompatActivity() {
                     linearLayout4.addView(button2)
                     linearLayout.addView(linearLayout4)
                     card.addView(linearLayout)
-
-
-//
-//                    val titleText = TextView(this@HomeActivity)
-//                    titleText.text = shop.capitalize()
-//                    titleText.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
-//                    titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24F)
-//                    val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.WRAP_CONTENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT
-//                    )
-//                    params.setMargins(80, 80, 10, 10)
-//                    titleText.layoutParams = params
-//
-//                    val descText = TextView(this@HomeActivity)
-//                    descText.text = clientid
-//                    descText.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
-//                    descText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14F)
-//                    val params2: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.WRAP_CONTENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT
-//                    )
-//                    params2.setMargins(80, 180, 10, 10)
-//                    descText.layoutParams = params2
 
                     dynamicArchive.addView(card)
                 }
