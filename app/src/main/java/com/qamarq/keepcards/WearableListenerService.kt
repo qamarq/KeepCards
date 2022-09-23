@@ -88,6 +88,8 @@ class DataLayerListenerService : WearableListenerService() {
                                     for (deleteSnapshot in dataSnapshot.children) {
                                         deleteSnapshot.ref.removeValue()
                                         sendCardsToWatch()
+                                        val notifying = settingsPrefs.getBoolean("notify_delete", false)
+                                        if (notifying) Toast.makeText(this@DataLayerListenerService, R.string.delete_notify, Toast.LENGTH_SHORT).show()
 //                                        Toast.makeText(this, R.string.sync_notify, Toast.LENGTH_SHORT).show()
                                     }
                                 }

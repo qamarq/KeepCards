@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.ViewConfiguration
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.gestures.scrollBy
@@ -282,6 +283,7 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
                     val dataMapItem = DataMapItem.fromDataItem(event.dataItem)
                     val message = dataMapItem.dataMap.getString("message")
                     val editor:SharedPreferences.Editor = sharedPreferences.edit()
+//                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                     if (message != null) {
                         if (message.contains("give_me_cards")) return
                         if (message.contains("add_card")) return
@@ -289,6 +291,10 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
                         if (message.contains("check_connection")) return
                         if (message.contains("check_update")) return
                         if (message.contains("delete_card")) return
+                        if (message.contains("connection_success")) {
+                            connected = true
+                            return
+                        }
                         if (message.contains("connection_success")) {
                             connected = true
                             return

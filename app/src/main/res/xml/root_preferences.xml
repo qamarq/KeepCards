@@ -52,8 +52,15 @@
             app:dependency="sync"
             app:key="notify_sync"
             app:summaryOff="@string/wearos_sync_notif_off"
-            app:summaryOn=""
+            app:summaryOn="@string/wearos_sync_notif_on"
             app:title="@string/wearos_sync_notif" />
+
+        <SwitchPreferenceCompat
+            app:dependency="sync"
+            app:key="notify_delete"
+            app:summaryOff="@string/wearos_delete_notif_off"
+            app:summaryOn="@string/wearos_delete_notif_on"
+            app:title="@string/wearos_sync_delete" />
 
     </PreferenceCategory>
 

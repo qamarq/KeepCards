@@ -6,22 +6,14 @@ plugins {
 }
 
 android {
-    signingConfigs {
-        debug {
-            storeFile file('D:\\AndroidStudioProjects\\keystore\\keepcards-qamarq.jks')
-            storePassword 'Kamil.23082005.'
-            keyAlias 'key0'
-            keyPassword 'Kamil.23082005.'
-        }
-    }
     compileSdk 33
 
     defaultConfig {
         applicationId "com.qamarq.keepcards"
         minSdk 26
-        targetSdk 33
-        versionCode 148
-        versionName "0.0.148"
+        targetSdk 32
+        versionCode 156
+        versionName "0.0.156"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

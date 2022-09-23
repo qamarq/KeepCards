@@ -10,9 +10,9 @@ android {
     defaultConfig {
         applicationId "com.qamarq.keepcards"
         minSdk 28
-        targetSdk 33
-        versionCode 149
-        versionName "0.0.149 - wearos"
+        targetSdk 32
+        versionCode 155
+        versionName "0.0.155 - wearos"
     }
 
     buildTypes {

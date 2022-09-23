@@ -151,6 +151,9 @@
     <string name="wearos_sync_notif">Powiadomienie o synchronizacji</string>
     <string name="wearos_sync_notif_off">Podczas synchronizacji nie będziesz o niej informowany</string>
     <string name="wearos_sync_notif_on">Podczas każdej synchronizacji dostaniesz o tym powiadomienie</string>
+    <string name="wearos_sync_delete">Powiadomienia o usunięciu</string>
+    <string name="wearos_delete_notif_off">Nie będziesz otrzymywać powiadomień o usunięciu karty z zegarka</string>
+    <string name="wearos_delete_notif_on">Po każdym usunięciu karty z zegarka zostaniesz o tym poinformowany powiadomieniem</string>
     <string name="update_title">Aktualizacje</string>
     <string name="in_app_update">Aktualizacje w aplikacji</string>
     <string name="in_app_update_off">Aby zaktualizować aplikację, otwórz Google Play</string>
@@ -180,6 +183,7 @@
     <string name="settings_brightness_on">Podczas pokazywania karty, jasność ekranu zostanie ustawiona na najwyższą wartość</string>
     <string name="donate">Wesprzyj twórcę</string>
     <string name="sync_notify">Twoje karty zostały pomyślnie zsynchronizowane z zegarkiem</string>
+    <string name="delete_notify">Została usunięta jedna karta poprzez zegarek z Wear OS</string>
     <string name="f_activated">Funkcja aktywowana</string>
     <string name="enable_features">Włącz funkcje</string>
     <string name="floating_desc">Floating Cards umożliwiają ci korzystanie z Twoich kart w każdym miejscu systemu. Wystarczy że na pasku zadań Android wybierzesz ikone naszej aplikacji i pojawi Ci się wyskakujące okno</string>

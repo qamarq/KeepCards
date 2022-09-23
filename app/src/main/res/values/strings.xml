@@ -186,6 +186,9 @@
     <string name="wearos_sync_notif">Sync notification</string>
     <string name="wearos_sync_notif_off">You will not be informed about it during synchronization</string>
     <string name="wearos_sync_notif_on">You\'ll get a notification every time you sync</string>
+    <string name="wearos_sync_delete">Removal Notifications</string>
+    <string name="wearos_delete_notif_off">You will not receive notifications when the card is removed from your watch</string>
+    <string name="wearos_delete_notif_on">Each time you remove the card from the watch, you will be notified about it</string>
     <string name="update_title">Updates</string>
     <string name="in_app_update">In-app updates</string>
     <string name="in_app_update_off">To update the app, open Google Play</string>
@@ -217,6 +220,7 @@
     <string name="settings_brightness_on">When showing a card, the screen brightness will be set to the highest value</string>
     <string name="donate">Support the creator</string>
     <string name="sync_notify">Your cards have been successfully synced to your watch</string>
+    <string name="delete_notify">One card was removed from the Wear OS watch</string>
     <string name="f_activated">Function activated</string>
     <string name="enable_features">Enable features</string>
     <string name="floating_desc">Floating Cards allow you to use your cards anywhere in the system. All you need to do is select the icon of our application on the Android taskbar and a pop-up window will appear</string>
