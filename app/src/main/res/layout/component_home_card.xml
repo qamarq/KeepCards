@@ -4,11 +4,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card"
+        android:id="@+id/main_card"
         style="?attr/materialCardViewElevatedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:clickable="true"
+        android:layout_margin="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,48 +20,76 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:padding="16dp">
-                    <LinearLayout
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:padding="16dp">
-                        <ImageView
-                            android:id="@+id/scan_img"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:scaleType="centerInside"
-                            app:srcCompat="@drawable/ic_qr_code_2_fill0_wght400_grad0_opsz48"
-                            app:tint="?attr/colorPrimary" />
-                    </LinearLayout>
+                android:orientation="horizontal"
+                android:padding="8dp">
 
+<!--                <LinearLayout-->
+<!--                    android:layout_width="55dp"-->
+<!--                    android:layout_height="55dp"-->
+<!--                    android:gravity="center"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:background="@drawable/icon_cards_bg"-->
+<!--                    android:padding="16dp">-->
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/scan_img"-->
+<!--                        android:layout_width="35dp"-->
+<!--                        android:layout_height="35dp"-->
+<!--                        android:scaleType="center"-->
+<!--                        app:srcCompat="@drawable/ic_qr_code_2_fill0_wght400_grad0_opsz48"-->
+<!--                        app:tint="?attr/background" />-->
+<!--                </LinearLayout>-->
+
+                <ImageView
+                    android:id="@+id/card_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_barcode_fill0_wght400_grad0_opsz48"
+                    app:tint="?attr/colorPrimary" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
                     <TextView
                         android:id="@+id/shop_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Biedronka"
                         android:textAppearance="?attr/textAppearanceTitleMedium" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/card_number"
+                        android:text="32464324f42756"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary" />
+                </LinearLayout>
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:id="@+id/card_number"-->
-<!--                    android:text="32464324f42756"-->
-<!--                    android:textAppearance="?attr/textAppearanceBodyMedium"-->
-<!--                    android:textColor="?android:attr/textColorSecondary" />-->
+                <Button
+                    style="@style/Widget.Material3.Button.Icon"
+                    android:id="@+id/open_btn"
+                    android:layout_width="50dp"
+                    app:icon="@drawable/ic_baseline_open_in_new_24"
+                    android:layout_height="50dp"
+                    android:text=""
+                    />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/client_id_desc"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="16dp"-->
-<!--                    android:text="Karta jest zarchiwizowana. Co chcesz z nią zrobić?"-->
-<!--                    android:textAppearance="?attr/textAppearanceBodyMedium"-->
-<!--                    android:textColor="?android:attr/textColorSecondary" />-->
+
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/client_id_desc"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="16dp"-->
+                <!--                    android:text="Karta jest zarchiwizowana. Co chcesz z nią zrobić?"-->
+                <!--                    android:textAppearance="?attr/textAppearanceBodyMedium"-->
+                <!--                    android:textColor="?android:attr/textColorSecondary" />-->
 
             </LinearLayout>
 

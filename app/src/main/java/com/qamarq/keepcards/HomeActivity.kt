@@ -44,6 +44,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.ktx.storage
 import com.onesignal.OneSignal
+import kotlinx.android.synthetic.main.activity_archive.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_home_account.*
 import kotlinx.android.synthetic.main.fragment_home_cards.*
@@ -780,7 +781,6 @@ class HomeActivity : AppCompatActivity() {
         val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile,
             Context.MODE_PRIVATE)
         database.child("users").child(userId.toString()).child("cards").addValueEventListener(object : ValueEventListener {
-            @RequiresApi(Build.VERSION_CODES.S)
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var emptyData: Boolean = true
                 progressBar.visibility = View.GONE
@@ -792,21 +792,66 @@ class HomeActivity : AppCompatActivity() {
                     val type = it.child("type").value.toString()
                     val clientid = it.child("clientid").value.toString()
 
-                    val card = MaterialCardView(this@HomeActivity, null, R.attr.materialCardViewElevatedStyle)
-                    card.layoutParams =
-                        LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                    val param = card.layoutParams as ViewGroup.MarginLayoutParams
-                    param.setMargins(50,20,50,20)
-                    card.layoutParams = param
-                    lastCard = card
-                    val button = MaterialButton(this@HomeActivity, null, R.attr.materialButtonStyle)
-                    button.setText(R.string.show_card)
-                    if (type == "barcode") {
-                        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_barcode_fill0_wght400_grad0_opsz24, 0, 0, 0)
-                    } else {
-                        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz24, 0, 0, 0)
-                    }
-                    button.setOnClickListener {
+//                    val card = MaterialCardView(this@HomeActivity, null, R.attr.materialCardViewElevatedStyle)
+//                    card.layoutParams =
+//                        LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+//                    val param = card.layoutParams as ViewGroup.MarginLayoutParams
+//                    param.setMargins(50,20,50,20)
+//                    card.layoutParams = param
+//                    lastCard = card
+//                    val button = MaterialButton(this@HomeActivity, null, R.attr.materialButtonStyle)
+//                    button.setText(R.string.show_card)
+//                    if (type == "barcode") {
+//                        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_barcode_fill0_wght400_grad0_opsz24, 0, 0, 0)
+//                    } else {
+//                        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz24, 0, 0, 0)
+//                    }
+//                    button.setOnClickListener {
+//                        val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+//                        editor.putString("curr_shop",shop)
+//                        editor.putString("curr_type",type)
+//                        editor.putString("curr_clientid",clientid)
+//                        editor.apply()
+//                        val i = Intent(this@HomeActivity, ScanCardActivity::class.java)
+//                        startActivity(i)
+//                    }
+//                    val params3: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+//                        LinearLayout.LayoutParams.MATCH_PARENT,
+//                        LinearLayout.LayoutParams.WRAP_CONTENT
+//                    )
+//                    params3.setMargins(80, 330, 80, 80)
+//                    button.layoutParams = params3
+//
+//                    val titleText = TextView(this@HomeActivity)
+//                    titleText.text = shop.capitalize()
+//                    titleText.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+//                    titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24F)
+//                    val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+//                        LinearLayout.LayoutParams.WRAP_CONTENT,
+//                        LinearLayout.LayoutParams.WRAP_CONTENT
+//                    )
+//                    params.setMargins(80, 80, 10, 10)
+//                    titleText.layoutParams = params
+//
+//                    val descText = TextView(this@HomeActivity)
+//                    descText.text = clientid
+//                    descText.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+//                    descText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14F)
+//                    val params2: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+//                        LinearLayout.LayoutParams.WRAP_CONTENT,
+//                        LinearLayout.LayoutParams.WRAP_CONTENT
+//                    )
+//                    params2.setMargins(80, 180, 10, 10)
+//                    descText.layoutParams = params2
+//
+//                    card.addView(titleText)
+//                    card.addView(descText)
+//                    card.addView(button)
+//                    dynamic.addView(card)
+
+                    val v: View = layoutInflater.inflate(R.layout.component_home_card, null)
+                    val mainCard: MaterialCardView = v.findViewById<View>(R.id.main_card) as MaterialCardView
+                    mainCard.setOnClickListener {
                         val editor: SharedPreferences.Editor =  sharedPreferences.edit()
                         editor.putString("curr_shop",shop)
                         editor.putString("curr_type",type)
@@ -815,39 +860,27 @@ class HomeActivity : AppCompatActivity() {
                         val i = Intent(this@HomeActivity, ScanCardActivity::class.java)
                         startActivity(i)
                     }
-                    val params3: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                    )
-                    params3.setMargins(80, 330, 80, 80)
-                    button.layoutParams = params3
-
-                    val titleText = TextView(this@HomeActivity)
-                    titleText.text = shop.capitalize()
-                    titleText.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
-                    titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24F)
-                    val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                    )
-                    params.setMargins(80, 80, 10, 10)
-                    titleText.layoutParams = params
-
-                    val descText = TextView(this@HomeActivity)
-                    descText.text = clientid
-                    descText.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
-                    descText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14F)
-                    val params2: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                    )
-                    params2.setMargins(80, 180, 10, 10)
-                    descText.layoutParams = params2
-
-                    card.addView(titleText)
-                    card.addView(descText)
-                    card.addView(button)
-                    dynamic.addView(card)
+                    val titleCard: TextView = v.findViewById<View>(R.id.shop_title) as TextView
+                    titleCard.text = shop.capitalize()
+                    val numberCard: TextView = v.findViewById<View>(R.id.card_number) as TextView
+                    numberCard.text = clientid.capitalize()
+                    val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
+                    if (type == "barcode") {
+                        iconCard.setImageResource(R.drawable.ic_barcode_fill0_wght400_grad0_opsz48)
+                    } else {
+                        iconCard.setImageResource(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz48)
+                    }
+                    val buttonOpen: Button = v.findViewById<View>(R.id.open_btn) as Button
+                    buttonOpen.setOnClickListener {
+                        val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+                        editor.putString("curr_shop",shop)
+                        editor.putString("curr_type",type)
+                        editor.putString("curr_clientid",clientid)
+                        editor.apply()
+                        val i = Intent(this@HomeActivity, ScanCardActivity::class.java)
+                        startActivity(i)
+                    }
+                    dynamic.addView(v)
                 }
                 if (emptyData) {
                     val no_data_label = TextView(this@HomeActivity)
@@ -862,9 +895,9 @@ class HomeActivity : AppCompatActivity() {
                     no_data_label.layoutParams = params
                     dynamic.addView(no_data_label)
                 } else {
-                    val param = lastCard?.layoutParams as ViewGroup.MarginLayoutParams
-                    param.setMargins(50,20,50,450)
-                    lastCard?.layoutParams ?: params
+//                    val param = lastCard?.layoutParams as ViewGroup.MarginLayoutParams
+//                    param.setMargins(50,20,50,450)
+//                    lastCard?.layoutParams ?: params
                 }
             }
 
@@ -956,7 +989,7 @@ class HomeActivity : AppCompatActivity() {
                         val localFile: File = File.createTempFile("Images", "bmp")
                         ref.getFile(localFile)
                             .addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
-                                my_image = BitmapFactory.decodeFile(localFile.getAbsolutePath())
+                                my_image = BitmapFactory.decodeFile(localFile.absolutePath)
                                 my_image?.circularIt(applicationContext)?.apply {
                                     imgView.setImageDrawable(this)
                                 }
@@ -988,9 +1021,9 @@ class HomeActivity : AppCompatActivity() {
                     no_data_label.layoutParams = params
                     friendsLayout.addView(no_data_label)
                 } else {
-                    val param = lastCard?.layoutParams as ViewGroup.MarginLayoutParams
-                    param.setMargins(50,20,50,450)
-                    lastCard?.layoutParams ?: params
+//                    val param = lastCard?.layoutParams as ViewGroup.MarginLayoutParams
+//                    param.setMargins(50,20,50,450)
+//                    lastCard?.layoutParams ?: params
                 }
             }
 
@@ -1030,14 +1063,14 @@ class HomeActivity : AppCompatActivity() {
         val data = baos.toByteArray()
         val storage = Firebase.storage
         val ref = storage.reference.child("profiles/$userId/avatar.jpg")
-        var uploadTask = ref.putBytes(data)
+        val uploadTask = ref.putBytes(data)
         uploadTask.addOnFailureListener {
         }.addOnSuccessListener {
             val parentLayout = findViewById<View>(android.R.id.content)
             Snackbar.make(parentLayout, R.string.new_pic_save, Snackbar.LENGTH_LONG)
                 .setAnchorView(R.id.extended_fab)
                 .setAction("Action", null).show()
-            bitmap?.circularIt(applicationContext)?.apply {
+            bitmap.circularIt(applicationContext).apply {
                 navDrawerProfilePic.setImageDrawable(this)
                 avatar_imgview.setImageDrawable(this)
             }
