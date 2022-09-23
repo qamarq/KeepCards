@@ -13,6 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -67,11 +68,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="13dp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/copy_clientid"
+                    android:id="@+id/delete_btn"
                     style="@style/Widget.Material3.Button.OutlinedButton.Icon"
                     android:layout_weight="1"
                     android:layout_width="0dp"
