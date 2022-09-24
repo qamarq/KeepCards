@@ -90,17 +90,19 @@ class ArchiveActivity : AppCompatActivity() {
 
                 }
                 if (emptyData) {
-                    val no_data_label = TextView(this@ArchiveActivity)
-                    no_data_label.setText("Brak zarchiwizowanych kart")
-                    no_data_label.textAlignment = View.TEXT_ALIGNMENT_CENTER
-                    no_data_label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15F)
-                    val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                    )
-                    params.setMargins(80, 10, 80, 10)
-                    no_data_label.layoutParams = params
-                    dynamicArchive.addView(no_data_label)
+//                    val no_data_label = TextView(this@ArchiveActivity)
+//                    no_data_label.setText("Brak zarchiwizowanych kart")
+//                    no_data_label.textAlignment = View.TEXT_ALIGNMENT_CENTER
+//                    no_data_label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15F)
+//                    val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+//                        LinearLayout.LayoutParams.MATCH_PARENT,
+//                        LinearLayout.LayoutParams.WRAP_CONTENT
+//                    )
+//                    params.setMargins(80, 10, 80, 10)
+//                    no_data_label.layoutParams = params
+//                    dynamicArchive.addView(no_data_label)
+                    val v: View = layoutInflater.inflate(R.layout.component_archive_empty, null)
+                    dynamicArchive.addView(v)
                 }
             }
 

@@ -895,6 +895,13 @@ class HomeActivity : AppCompatActivity() {
                     no_data_label.layoutParams = params
                     dynamic.addView(no_data_label)
                 } else {
+                    val layoutSpace = LinearLayout(this@HomeActivity, null)
+                    layoutSpace.layoutParams =
+                        LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    val param = layoutSpace.layoutParams as ViewGroup.MarginLayoutParams
+                    param.setMargins(50,100,50,100)
+                    layoutSpace.layoutParams = param
+                    dynamic.addView(layoutSpace)
 //                    val param = lastCard?.layoutParams as ViewGroup.MarginLayoutParams
 //                    param.setMargins(50,20,50,450)
 //                    lastCard?.layoutParams ?: params
@@ -1021,9 +1028,13 @@ class HomeActivity : AppCompatActivity() {
                     no_data_label.layoutParams = params
                     friendsLayout.addView(no_data_label)
                 } else {
-//                    val param = lastCard?.layoutParams as ViewGroup.MarginLayoutParams
-//                    param.setMargins(50,20,50,450)
-//                    lastCard?.layoutParams ?: params
+                    val layoutSpace = LinearLayout(this@HomeActivity, null)
+                    layoutSpace.layoutParams =
+                        LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    val param = layoutSpace.layoutParams as ViewGroup.MarginLayoutParams
+                    param.setMargins(50,100,50,100)
+                    layoutSpace.layoutParams = param
+                    dynamic.addView(layoutSpace)
                 }
             }
 
