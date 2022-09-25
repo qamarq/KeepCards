@@ -10,8 +10,11 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
@@ -102,7 +105,7 @@ class HomeActivity : AppCompatActivity() {
             .child("users")
             .child(userId.toString())
             .child("notify_id").setValue(onesignalUserId)
-        extended_fab.setOnClickListener { view ->
+        extended_fab.setOnClickListener {
             when (fabActualMode) {
                 "home" -> {
                     val i = Intent(this@HomeActivity, AddActivity::class.java)
@@ -358,7 +361,6 @@ class HomeActivity : AppCompatActivity() {
             val editor:SharedPreferences.Editor = sharedPreferences.edit()
             editor.putBoolean("request",true)
             editor.apply()
-            editor.commit()
             val i = Intent(this@HomeActivity, RequestPermissionActivity::class.java)
             startActivity(i)
         }
@@ -736,9 +738,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private var myActMode: ActionMode? = null
-    var currentShopName: String = ""
-    var currentCardId: String = ""
-    var currentCardType: String = ""
+    var selectedItems: MutableList<View> = mutableListOf()
 
 
     private fun makeCardLayout() {
@@ -862,18 +862,35 @@ class HomeActivity : AppCompatActivity() {
                     val v: View = layoutInflater.inflate(R.layout.component_home_card, null)
                     val mainCard: MaterialCardView = v.findViewById<View>(R.id.main_card) as MaterialCardView
                     mainCard.setOnClickListener {
-                        val editor: SharedPreferences.Editor =  sharedPreferences.edit()
-                        editor.putString("curr_shop",shop)
-                        editor.putString("curr_type",type)
-                        editor.putString("curr_clientid",clientid)
-                        editor.apply()
-                        val i = Intent(this@HomeActivity, ScanCardActivity::class.java)
-                        startActivity(i)
+                        if (myActMode != null) {
+                            val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
+                            if (iconCard.drawable.constantState == resources.getDrawable(R.drawable.ic_baseline_check_circle_24).constantState) {
+                                val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
+                                if (type == "barcode") {
+                                    iconCard.setImageResource(R.drawable.ic_barcode_fill0_wght400_grad0_opsz48)
+                                } else {
+                                    iconCard.setImageResource(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz48)
+                                }
+                                selectedItems.remove(v)
+                            } else {
+                                val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
+                                iconCard.setImageResource(R.drawable.ic_baseline_check_circle_24)
+                                selectedItems.add(v)
+                            }
+                        } else {
+                            val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+                            editor.putString("curr_shop",shop)
+                            editor.putString("curr_type",type)
+                            editor.putString("curr_clientid",clientid)
+                            editor.apply()
+                            val i = Intent(this@HomeActivity, ScanCardActivity::class.java)
+                            startActivity(i)
+                        }
                     }
                     mainCard.setOnLongClickListener(OnLongClickListener {
-                        currentShopName = shop
-                        currentCardId = clientid
-                        currentCardType = type
+                        selectedItems.add(v)
+                        val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
+                        iconCard.setImageResource(R.drawable.ic_baseline_check_circle_24)
                         if (myActMode != null) {
                             return@OnLongClickListener false
                         }
@@ -884,6 +901,8 @@ class HomeActivity : AppCompatActivity() {
                     titleCard.text = shop.capitalize()
                     val numberCard: TextView = v.findViewById<View>(R.id.card_number) as TextView
                     numberCard.text = clientid.capitalize()
+                    val typeCard: TextView = v.findViewById<View>(R.id.card_type) as TextView
+                    typeCard.text = type
                     val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
                     if (type == "barcode") {
                         iconCard.setImageResource(R.drawable.ic_barcode_fill0_wght400_grad0_opsz48)
@@ -936,8 +955,9 @@ class HomeActivity : AppCompatActivity() {
 
     val myActModeCallback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+            topAppBar.visibility = View.GONE
             mode?.menuInflater?.inflate(R.menu.contextual_home_menu, menu)
-            mode?.title = currentShopName
+            mode?.title = "Zaznaczone: "+selectedItems.count()
             return true
         }
 
@@ -947,20 +967,14 @@ class HomeActivity : AppCompatActivity() {
 
         override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
             return when (item?.itemId) {
-                R.id.share -> {
-                    Toast.makeText(this@HomeActivity, "Selected Option 1", Toast.LENGTH_SHORT)
-                        .show()
-                    mode?.finish()
-                    true
-                }
                 R.id.archive -> {
-                    Toast.makeText(this@HomeActivity, "Selected Option 2", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@HomeActivity, "archive", Toast.LENGTH_SHORT)
                         .show()
                     mode?.finish()
                     true
                 }
                 R.id.delete -> {
-                    Toast.makeText(this@HomeActivity, "Selected Option 3", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@HomeActivity, "delete", Toast.LENGTH_SHORT)
                         .show()
                     mode?.finish()
                     true
@@ -971,6 +985,18 @@ class HomeActivity : AppCompatActivity() {
 
         override fun onDestroyActionMode(mode: ActionMode?) {
             myActMode = null
+            Handler(Looper.getMainLooper()).postDelayed({
+                topAppBar.visibility = View.VISIBLE
+                selectedItems.forEach {
+                    val iconCard: ImageView = it.findViewById<View>(R.id.card_icon) as ImageView
+                    val typeCard: TextView = it.findViewById<View>(R.id.card_type) as TextView
+                    if (typeCard.text == "barcode") {
+                        iconCard.setImageResource(R.drawable.ic_barcode_fill0_wght400_grad0_opsz48)
+                    } else {
+                        iconCard.setImageResource(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz48)
+                    }
+                }
+            }, 500)
         }
     }
 

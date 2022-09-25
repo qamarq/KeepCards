@@ -12,8 +12,8 @@ android {
         applicationId "com.qamarq.keepcards"
         minSdk 26
         targetSdk 32
-        versionCode 166
-        versionName "0.0.166"
+        versionCode 168
+        versionName "0.0.168"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -47,8 +47,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
-//    implementation 'com.google.firebase:firebase-auth-ktx:21.0.8'
-//    implementation 'com.google.firebase:firebase-auth:21.0.6'
     implementation ('com.google.firebase:firebase-auth-ktx:21.0.8') {
         exclude module: "play-services-safetynet"
     }
@@ -60,13 +58,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-dynamic-links-ktx:21.0.2'
     implementation 'com.google.firebase:firebase-analytics-ktx:21.1.1'
     implementation 'com.google.firebase:firebase-messaging-ktx:23.0.8'
-    implementation 'com.google.firebase:firebase-messaging:23.0.6'
     implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
     implementation 'com.google.zxing:core:3.4.0'
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.2'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.makeramen:roundedimageview:2.3.0'
-    implementation 'com.google.android.gms:play-services-wearable:17.1.0'
+    implementation 'com.google.android.gms:play-services-wearable:18.0.0'
     implementation 'androidx.wear:wear:1.2.0'
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'com.google.android.gms:play-services-auth:20.3.0'
