@@ -8,6 +8,8 @@
         style="?attr/materialCardViewElevatedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:checkable="true"
+        android:focusable="true"
         android:clickable="true"
         android:layout_margin="7dp">
 
@@ -81,13 +83,20 @@
                         android:textColor="?android:attr/textColorSecondary" />
                 </LinearLayout>
 
+<!--                <Button-->
+<!--                    style="@style/Widget.Material3.Button.Icon"-->
+<!--                    android:id="@+id/open_btn"-->
+<!--                    android:layout_width="50dp"-->
+<!--                    app:icon="@drawable/ic_baseline_open_in_new_24"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:text=""-->
+<!--                    />-->
                 <Button
-                    style="@style/Widget.Material3.Button.Icon"
+                    style="@style/Widget.Material3.Button.TextButton"
                     android:id="@+id/open_btn"
-                    android:layout_width="50dp"
-                    app:icon="@drawable/ic_baseline_open_in_new_24"
-                    android:layout_height="50dp"
-                    android:text=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pokaż kartę"
                     />
 
 

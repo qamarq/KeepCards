@@ -52,7 +52,7 @@ class ArchiveActivity : AppCompatActivity() {
                     val titleCard: TextView = v.findViewById<View>(R.id.shop_title) as TextView
                     titleCard.text = shop.capitalize()
                     val numberCard: TextView = v.findViewById<View>(R.id.card_number) as TextView
-                    numberCard.text = clientid.capitalize()
+                    numberCard.text = clientid
                     val buttonRestore: Button = v.findViewById<View>(R.id.restore_btn) as Button
                     buttonRestore.setOnClickListener {
                         val userId = Firebase.auth.currentUser?.uid

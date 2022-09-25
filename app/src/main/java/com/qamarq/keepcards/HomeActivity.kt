@@ -740,7 +740,6 @@ class HomeActivity : AppCompatActivity() {
     private var myActMode: ActionMode? = null
     var selectedItems: MutableList<View> = mutableListOf()
 
-
     private fun makeCardLayout() {
         val storage = Firebase.storage
         val userId = Firebase.auth.currentUser?.uid
@@ -795,88 +794,35 @@ class HomeActivity : AppCompatActivity() {
                 var emptyData: Boolean = true
                 progressBar.visibility = View.GONE
                 dynamic.removeAllViews()
-                var lastCard: MaterialCardView? = null
                 dataSnapshot.children.forEach {
                     emptyData = false
                     val shop = it.child("shop").value.toString()
                     val type = it.child("type").value.toString()
                     val clientid = it.child("clientid").value.toString()
-
-//                    val card = MaterialCardView(this@HomeActivity, null, R.attr.materialCardViewElevatedStyle)
-//                    card.layoutParams =
-//                        LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-//                    val param = card.layoutParams as ViewGroup.MarginLayoutParams
-//                    param.setMargins(50,20,50,20)
-//                    card.layoutParams = param
-//                    lastCard = card
-//                    val button = MaterialButton(this@HomeActivity, null, R.attr.materialButtonStyle)
-//                    button.setText(R.string.show_card)
-//                    if (type == "barcode") {
-//                        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_barcode_fill0_wght400_grad0_opsz24, 0, 0, 0)
-//                    } else {
-//                        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz24, 0, 0, 0)
-//                    }
-//                    button.setOnClickListener {
-//                        val editor: SharedPreferences.Editor =  sharedPreferences.edit()
-//                        editor.putString("curr_shop",shop)
-//                        editor.putString("curr_type",type)
-//                        editor.putString("curr_clientid",clientid)
-//                        editor.apply()
-//                        val i = Intent(this@HomeActivity, ScanCardActivity::class.java)
-//                        startActivity(i)
-//                    }
-//                    val params3: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.MATCH_PARENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT
-//                    )
-//                    params3.setMargins(80, 330, 80, 80)
-//                    button.layoutParams = params3
-//
-//                    val titleText = TextView(this@HomeActivity)
-//                    titleText.text = shop.capitalize()
-//                    titleText.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
-//                    titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24F)
-//                    val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.WRAP_CONTENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT
-//                    )
-//                    params.setMargins(80, 80, 10, 10)
-//                    titleText.layoutParams = params
-//
-//                    val descText = TextView(this@HomeActivity)
-//                    descText.text = clientid
-//                    descText.textAlignment = View.TEXT_ALIGNMENT_VIEW_START
-//                    descText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14F)
-//                    val params2: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.WRAP_CONTENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT
-//                    )
-//                    params2.setMargins(80, 180, 10, 10)
-//                    descText.layoutParams = params2
-//
-//                    card.addView(titleText)
-//                    card.addView(descText)
-//                    card.addView(button)
-//                    dynamic.addView(card)
-
                     val v: View = layoutInflater.inflate(R.layout.component_home_card, null)
                     val mainCard: MaterialCardView = v.findViewById<View>(R.id.main_card) as MaterialCardView
                     mainCard.setOnClickListener {
                         if (myActMode != null) {
-                            val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
-                            if (iconCard.drawable.constantState == resources.getDrawable(R.drawable.ic_baseline_check_circle_24).constantState) {
-                                val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
-                                val typeCard: TextView = v.findViewById<View>(R.id.card_type) as TextView
-                                if (typeCard.text == "barcode") {
-                                    iconCard.setImageResource(R.drawable.ic_barcode_fill0_wght400_grad0_opsz48)
-                                } else {
-                                    iconCard.setImageResource(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz48)
-                                }
+                            if (selectedItems.contains(v)) {
+//                                val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
+//                                val typeCard: TextView = v.findViewById<View>(R.id.card_type) as TextView
+//                                if (typeCard.text == "barcode") {
+//                                    iconCard.setImageResource(R.drawable.ic_barcode_fill0_wght400_grad0_opsz48)
+//                                } else {
+//                                    iconCard.setImageResource(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz48)
+//                                }
+                                mainCard.isChecked = false
                                 selectedItems.remove(v)
                             } else {
-                                val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
-                                iconCard.setImageResource(R.drawable.ic_baseline_check_circle_24)
+                                mainCard.isChecked = true
+//                                val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
+//                                iconCard.setImageResource(R.drawable.ic_baseline_check_circle_24)
                                 selectedItems.add(v)
+                            }
+                            if (selectedItems.isNotEmpty()) {
+                                myActMode?.title = "Zaznaczone: "+selectedItems.count()
+                            } else {
+                                myActMode?.finish()
                             }
                         } else {
                             val editor: SharedPreferences.Editor =  sharedPreferences.edit()
@@ -890,8 +836,9 @@ class HomeActivity : AppCompatActivity() {
                     }
                     mainCard.setOnLongClickListener(OnLongClickListener {
                         selectedItems.add(v)
-                        val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
-                        iconCard.setImageResource(R.drawable.ic_baseline_check_circle_24)
+//                        val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
+//                        iconCard.setImageResource(R.drawable.ic_baseline_check_circle_24)
+                        mainCard.isChecked = true
                         if (myActMode != null) {
                             return@OnLongClickListener false
                         }
@@ -901,7 +848,7 @@ class HomeActivity : AppCompatActivity() {
                     val titleCard: TextView = v.findViewById<View>(R.id.shop_title) as TextView
                     titleCard.text = shop.capitalize()
                     val numberCard: TextView = v.findViewById<View>(R.id.card_number) as TextView
-                    numberCard.text = clientid.capitalize()
+                    numberCard.text = clientid
                     val typeCard: TextView = v.findViewById<View>(R.id.card_type) as TextView
                     typeCard.text = type
                     val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
@@ -923,17 +870,21 @@ class HomeActivity : AppCompatActivity() {
                     dynamic.addView(v)
                 }
                 if (emptyData) {
-                    val no_data_label = TextView(this@HomeActivity)
-                    no_data_label.setText(R.string.no_data_label)
-                    no_data_label.textAlignment = View.TEXT_ALIGNMENT_CENTER
-                    no_data_label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15F)
-                    val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                    )
-                    params.setMargins(80, 10, 80, 10)
-                    no_data_label.layoutParams = params
-                    dynamic.addView(no_data_label)
+//                    val no_data_label = TextView(this@HomeActivity)
+//                    no_data_label.setText(R.string.no_data_label)
+//                    no_data_label.textAlignment = View.TEXT_ALIGNMENT_CENTER
+//                    no_data_label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15F)
+//                    val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+//                        LinearLayout.LayoutParams.WRAP_CONTENT,
+//                        LinearLayout.LayoutParams.WRAP_CONTENT
+//                    )
+//                    params.setMargins(80, 10, 80, 10)
+//                    no_data_label.layoutParams = params
+//                    dynamic.addView(no_data_label)
+                    val v: View = layoutInflater.inflate(R.layout.component_archive_empty, null)
+                    val iconCard: ImageView = v.findViewById<View>(R.id.scan_img) as ImageView
+                    iconCard.setImageResource(R.drawable.ic_baseline_add_circle_24)
+                    dynamic.addView(v)
                 } else {
                     val layoutSpace = LinearLayout(this@HomeActivity, null)
                     layoutSpace.layoutParams =
@@ -942,9 +893,6 @@ class HomeActivity : AppCompatActivity() {
                     param.setMargins(50,100,50,100)
                     layoutSpace.layoutParams = param
                     dynamic.addView(layoutSpace)
-//                    val param = lastCard?.layoutParams as ViewGroup.MarginLayoutParams
-//                    param.setMargins(50,20,50,450)
-//                    lastCard?.layoutParams ?: params
                 }
             }
 
@@ -969,15 +917,70 @@ class HomeActivity : AppCompatActivity() {
         override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
             return when (item?.itemId) {
                 R.id.archive -> {
-                    Toast.makeText(this@HomeActivity, "archive", Toast.LENGTH_SHORT)
+                    MaterialAlertDialogBuilder(this@HomeActivity)
+                        .setTitle("Archiwizacja")
+                        .setMessage("Czy chcesz zarchiwizować następującą liczbę elementów: "+selectedItems.count())
+                        .setIcon(R.drawable.ic_baseline_archive_24)
+                        .setPositiveButton("Archiwizuj") { dialog, _ ->
+                            dialog.cancel()
+                            val userId = Firebase.auth.currentUser?.uid
+                            selectedItems.forEach {
+                                val titleCard: TextView = it.findViewById<View>(R.id.shop_title) as TextView
+                                val numberCard: TextView = it.findViewById<View>(R.id.card_number) as TextView
+                                val typeCard: TextView = it.findViewById<View>(R.id.card_type) as TextView
+                                Log.d("fsdjkfjdsf", numberCard.text.toString())
+                                val deleteQuery: Query = database.child("users").child(userId.toString()).child("cards").child(numberCard.text.toString())
+                                deleteQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                        for (deleteSnapshot in dataSnapshot.children) {
+                                            deleteSnapshot.ref.removeValue()
+                                            val card = newCard(numberCard.text.toString(), typeCard.text.toString(), titleCard.text.toString())
+                                            database.child("users").child(userId.toString()).child("archive").child(numberCard.text.toString()).setValue(card)
+                                        }
+                                    }
+                                    override fun onCancelled(databaseError: DatabaseError) {}
+                                })
+                            }
+                            mode?.finish()
+                        }
+                        .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                            dialog.cancel()
+                        }
                         .show()
-                    mode?.finish()
                     true
                 }
                 R.id.delete -> {
-                    Toast.makeText(this@HomeActivity, "delete", Toast.LENGTH_SHORT)
+                    MaterialAlertDialogBuilder(this@HomeActivity)
+                        .setTitle("Usuwanie")
+                        .setMessage("Czy na pewno chcesz usunąć następującą liczbę elementów: "+selectedItems.count())
+                        .setIcon(R.drawable.ic_baseline_delete_24)
+                        .setPositiveButton("Usuń") { dialog, _ ->
+                            dialog.cancel()
+                            val userId = Firebase.auth.currentUser?.uid
+                            var itemsToDelete: MutableList<String> = mutableListOf()
+                            selectedItems.forEach {
+                                val numberCard: TextView = it.findViewById<View>(R.id.card_number) as TextView
+                                itemsToDelete.add(numberCard.text.toString())
+                            }
+                            val deleteQuery: Query = database.child("users").child(userId.toString()).child("cards")
+                            deleteQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                    for (deleteSnapshot in dataSnapshot.children) {
+                                        println(itemsToDelete)
+                                        if (itemsToDelete.contains(deleteSnapshot.key)) {
+                                            println("fdshkjfdhsfhjdsjfdsjkhf")
+                                            deleteSnapshot.ref.removeValue()
+                                        }
+                                    }
+                                }
+                                override fun onCancelled(databaseError: DatabaseError) {}
+                            })
+                            mode?.finish()
+                        }
+                        .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                            dialog.cancel()
+                        }
                         .show()
-                    mode?.finish()
                     true
                 }
                 else -> false
@@ -989,15 +992,11 @@ class HomeActivity : AppCompatActivity() {
             Handler(Looper.getMainLooper()).postDelayed({
                 topAppBar.visibility = View.VISIBLE
                 selectedItems.forEach {
-                    val iconCard: ImageView = it.findViewById<View>(R.id.card_icon) as ImageView
-                    val typeCard: TextView = it.findViewById<View>(R.id.card_type) as TextView
-                    if (typeCard.text == "barcode") {
-                        iconCard.setImageResource(R.drawable.ic_barcode_fill0_wght400_grad0_opsz48)
-                    } else {
-                        iconCard.setImageResource(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz48)
-                    }
+                    val mainCard: MaterialCardView = it.findViewById<View>(R.id.main_card) as MaterialCardView
+                    mainCard.isChecked = false
                 }
-            }, 200)
+                selectedItems.clear()
+            }, 320)
         }
     }
 
@@ -1038,9 +1037,7 @@ class HomeActivity : AppCompatActivity() {
                                 }
                             }
 
-                            override fun onCancelled(databaseError: DatabaseError) {
-
-                            }
+                            override fun onCancelled(databaseError: DatabaseError) {}
                         })
                     }
                     val params4: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
