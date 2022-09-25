@@ -1,5 +1,6 @@
 package com.qamarq.keepcards
 
+import android.R.attr.mode
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -15,11 +16,14 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import android.util.TypedValue
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.view.isVisible
@@ -731,6 +735,8 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
+    private var myActMode: ActionMode? = null
+
     private fun makeCardLayout() {
         val storage = Firebase.storage
         val userId = Firebase.auth.currentUser?.uid
@@ -860,6 +866,13 @@ class HomeActivity : AppCompatActivity() {
                         val i = Intent(this@HomeActivity, ScanCardActivity::class.java)
                         startActivity(i)
                     }
+                    mainCard.setOnLongClickListener(OnLongClickListener {
+                        if (myActMode != null) {
+                            return@OnLongClickListener false
+                        }
+                        myActMode = startSupportActionMode(myActModeCallback)
+                        true
+                    })
                     val titleCard: TextView = v.findViewById<View>(R.id.shop_title) as TextView
                     titleCard.text = shop.capitalize()
                     val numberCard: TextView = v.findViewById<View>(R.id.card_number) as TextView
@@ -912,6 +925,46 @@ class HomeActivity : AppCompatActivity() {
                 Log.d("TAG", error.message)
             }
         })
+    }
+
+    val myActModeCallback = object : ActionMode.Callback {
+        override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+            mode?.menuInflater?.inflate(R.menu.contextual_home_menu, menu)
+            mode?.title = "Select option here"
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+            return false
+        }
+
+        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+            return when (item?.itemId) {
+                R.id.share -> {
+                    Toast.makeText(this@HomeActivity, "Selected Option 1", Toast.LENGTH_SHORT)
+                        .show()
+                    mode?.finish()
+                    true
+                }
+                R.id.archive -> {
+                    Toast.makeText(this@HomeActivity, "Selected Option 2", Toast.LENGTH_SHORT)
+                        .show()
+                    mode?.finish()
+                    true
+                }
+                R.id.delete -> {
+                    Toast.makeText(this@HomeActivity, "Selected Option 3", Toast.LENGTH_SHORT)
+                        .show()
+                    mode?.finish()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode?) {
+            myActMode = null
+        }
     }
 
     private fun makeFriendsLayout() {
