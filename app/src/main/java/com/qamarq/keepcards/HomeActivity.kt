@@ -736,6 +736,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private var myActMode: ActionMode? = null
+    var currentShopName: String = ""
+    var currentCardId: String = ""
+    var currentCardType: String = ""
+
 
     private fun makeCardLayout() {
         val storage = Firebase.storage
@@ -867,6 +871,9 @@ class HomeActivity : AppCompatActivity() {
                         startActivity(i)
                     }
                     mainCard.setOnLongClickListener(OnLongClickListener {
+                        currentShopName = shop
+                        currentCardId = clientid
+                        currentCardType = type
                         if (myActMode != null) {
                             return@OnLongClickListener false
                         }
@@ -930,7 +937,7 @@ class HomeActivity : AppCompatActivity() {
     val myActModeCallback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
             mode?.menuInflater?.inflate(R.menu.contextual_home_menu, menu)
-            mode?.title = "Select option here"
+            mode?.title = currentShopName
             return true
         }
 
