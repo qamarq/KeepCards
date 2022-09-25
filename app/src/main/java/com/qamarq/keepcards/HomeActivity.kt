@@ -866,7 +866,8 @@ class HomeActivity : AppCompatActivity() {
                             val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
                             if (iconCard.drawable.constantState == resources.getDrawable(R.drawable.ic_baseline_check_circle_24).constantState) {
                                 val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
-                                if (type == "barcode") {
+                                val typeCard: TextView = v.findViewById<View>(R.id.card_type) as TextView
+                                if (typeCard.text == "barcode") {
                                     iconCard.setImageResource(R.drawable.ic_barcode_fill0_wght400_grad0_opsz48)
                                 } else {
                                     iconCard.setImageResource(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz48)
@@ -996,7 +997,7 @@ class HomeActivity : AppCompatActivity() {
                         iconCard.setImageResource(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz48)
                     }
                 }
-            }, 500)
+            }, 200)
         }
     }
 
