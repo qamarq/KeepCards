@@ -870,17 +870,6 @@ class HomeActivity : AppCompatActivity() {
                     dynamic.addView(v)
                 }
                 if (emptyData) {
-//                    val no_data_label = TextView(this@HomeActivity)
-//                    no_data_label.setText(R.string.no_data_label)
-//                    no_data_label.textAlignment = View.TEXT_ALIGNMENT_CENTER
-//                    no_data_label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15F)
-//                    val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.WRAP_CONTENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT
-//                    )
-//                    params.setMargins(80, 10, 80, 10)
-//                    no_data_label.layoutParams = params
-//                    dynamic.addView(no_data_label)
                     val v: View = layoutInflater.inflate(R.layout.component_archive_empty, null)
                     val iconCard: ImageView = v.findViewById<View>(R.id.scan_img) as ImageView
                     iconCard.setImageResource(R.drawable.ic_baseline_add_circle_24)
@@ -1100,17 +1089,21 @@ class HomeActivity : AppCompatActivity() {
                     friendsLayout.addView(card)
                 }
                 if (emptyData) {
-                    val no_data_label = TextView(this@HomeActivity)
-                    no_data_label.setText(R.string.no_friends_label)
-                    no_data_label.textAlignment = View.TEXT_ALIGNMENT_CENTER
-                    no_data_label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15F)
-                    val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT
-                    )
-                    params.setMargins(80, 10, 80, 10)
-                    no_data_label.layoutParams = params
-                    friendsLayout.addView(no_data_label)
+//                    val no_data_label = TextView(this@HomeActivity)
+//                    no_data_label.setText(R.string.no_friends_label)
+//                    no_data_label.textAlignment = View.TEXT_ALIGNMENT_CENTER
+//                    no_data_label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15F)
+//                    val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+//                        LinearLayout.LayoutParams.MATCH_PARENT,
+//                        LinearLayout.LayoutParams.MATCH_PARENT
+//                    )
+//                    params.setMargins(80, 10, 80, 10)
+//                    no_data_label.layoutParams = params
+//                    friendsLayout.addView(no_data_label)
+                    val v: View = layoutInflater.inflate(R.layout.component_archive_empty, null)
+                    val iconCard: ImageView = v.findViewById<View>(R.id.scan_img) as ImageView
+                    iconCard.setImageResource(R.drawable.ic_baseline_add_circle_24)
+                    dynamic.addView(v)
                 } else {
                     val layoutSpace = LinearLayout(this@HomeActivity, null)
                     layoutSpace.layoutParams =
