@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:checkable="true"
         android:focusable="true"
-        app:checkedIconTint="?attr/colorPrimary"
+        app:checkedIcon="@drawable/ic_baseline_check_circle_24"
+        app:checkedIconTint="@android:color/transparent"
         android:clickable="true"
         android:layout_margin="7dp">
 
@@ -46,9 +47,9 @@
 
                 <ImageView
                     android:id="@+id/card_icon"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="7dp"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/ic_barcode_fill0_wght400_grad0_opsz48"
                     app:tint="?attr/colorPrimary" />
@@ -58,7 +59,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginStart="18dp">
+                    android:layout_marginStart="19dp">
                     <TextView
                         android:id="@+id/shop_title"
                         android:layout_width="match_parent"

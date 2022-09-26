@@ -1,5 +1,7 @@
 package com.qamarq.keepcards
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.*
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -7,6 +9,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -810,8 +813,16 @@ class HomeActivity : AppCompatActivity() {
                         if (myActMode != null) {
                             if (selectedItems.contains(v)) {
                                 mainCard.isChecked = false
+                                val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
+                                if (type == "barcode") {
+                                    changeImageCard(R.drawable.ic_barcode_fill0_wght400_grad0_opsz48, iconCard)
+                                } else {
+                                    changeImageCard(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz48, iconCard)
+                                }
                                 selectedItems.remove(v)
                             } else {
+                                val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
+                                changeImageCard(R.drawable.ic_baseline_check_circle_24, iconCard)
                                 mainCard.isChecked = true
                                 selectedItems.add(v)
                             }
@@ -844,8 +855,8 @@ class HomeActivity : AppCompatActivity() {
                     }
                     mainCard.setOnLongClickListener(OnLongClickListener {
                         selectedItems.add(v)
-//                        val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
-//                        iconCard.setImageResource(R.drawable.ic_baseline_check_circle_24)
+                        val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
+                        changeImageCard(R.drawable.ic_baseline_check_circle_24, iconCard)
                         mainCard.isChecked = true
                         if (myActMode != null) {
                             return@OnLongClickListener false
@@ -895,6 +906,17 @@ class HomeActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {
                 Log.d("TAG", error.message)
+            }
+        })
+    }
+
+    private fun changeImageCard(resId: Int, imgView: ImageView) {
+        imgView.rotationY = 0f
+        imgView.animate().rotationY(90f).setDuration(130).setListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                imgView.setImageResource(resId)
+                imgView.rotationY = 270f
+                imgView.animate().rotationY(360f).setListener(null)
             }
         })
     }
@@ -1038,11 +1060,37 @@ class HomeActivity : AppCompatActivity() {
             myActMode = null
             selectedItems.forEach {
                 val mainCard: MaterialCardView = it.findViewById<View>(R.id.main_card) as MaterialCardView
+                val iconCard: ImageView = it.findViewById<View>(R.id.card_icon) as ImageView
+                val typeCard: TextView = it.findViewById<View>(R.id.card_type) as TextView
+                if (typeCard.text.toString() == "barcode") {
+                    iconCard.setImageResource(R.drawable.ic_barcode_fill0_wght400_grad0_opsz48)
+                } else {
+                    iconCard.setImageResource(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz48)
+                }
                 mainCard.isChecked = false
             }
             selectedItems.clear()
         }
     }
+
+//    fun ImageViewAnimatedChange(c: Context?, v: ImageView, new_image: Bitmap?) {
+//        val anim_out: Animation = AnimationUtils.loadAnimation(c, android.R.anim.fade_out)
+//        val anim_in: Animation = AnimationUtils.loadAnimation(c, android.R.anim.fade_in)
+//        anim_out.setAnimationListener(object : AnimationListener() {
+//            fun onAnimationStart(animation: Animation?) {}
+//            fun onAnimationRepeat(animation: Animation?) {}
+//            fun onAnimationEnd(animation: Animation?) {
+//                v.setImageBitmap(new_image)
+//                anim_in.setAnimationListener(object : AnimationListener() {
+//                    fun onAnimationStart(animation: Animation?) {}
+//                    fun onAnimationRepeat(animation: Animation?) {}
+//                    fun onAnimationEnd(animation: Animation?) {}
+//                })
+//                v.startAnimation(anim_in)
+//            }
+//        })
+//        v.startAnimation(anim_out)
+//    }
 
     private fun makeFriendsLayout() {
         val database = Firebase.database.reference
