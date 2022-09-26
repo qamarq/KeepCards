@@ -552,17 +552,10 @@ class ScanCardActivity : AppCompatActivity() {
         }
     }
 
-
     private fun setClipboard(context: Context, text: String) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            val clipboard =
-                context.getSystemService(CLIPBOARD_SERVICE) as android.text.ClipboardManager
-            clipboard.text = text
-        } else {
-            val clipboard = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("Copied Text", text)
-            clipboard.setPrimaryClip(clip)
-        }
+        val clipboard = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("Copied Text", text)
+        clipboard.setPrimaryClip(clip)
     }
 
     private fun openDialog() {
