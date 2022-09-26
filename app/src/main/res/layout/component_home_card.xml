@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:checkable="true"
         android:focusable="true"
-        app:checkedIcon="@drawable/ic_baseline_task_alt_24"
         app:checkedIconTint="?attr/colorPrimary"
         android:clickable="true"
         android:layout_margin="7dp">
