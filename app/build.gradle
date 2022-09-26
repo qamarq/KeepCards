@@ -12,8 +12,8 @@ android {
         applicationId "com.qamarq.keepcards"
         minSdk 26
         targetSdk 32
-        versionCode 176
-        versionName "0.0.176"
+        versionCode 177
+        versionName "0.0.177"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
