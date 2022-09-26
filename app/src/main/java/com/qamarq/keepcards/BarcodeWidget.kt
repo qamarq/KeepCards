@@ -73,7 +73,6 @@ internal fun updateAppWidget(
     val typedValue = TypedValue()
     val theme: Resources.Theme = context.theme
     theme.resolveAttribute(com.google.android.material.R.attr.cardForegroundColor, typedValue, true)
-    @ColorInt val primaryColor = typedValue.data
     var themeColor = Color.BLACK
     val nightModeFlags: Int = context.resources.configuration.uiMode and
             Configuration.UI_MODE_NIGHT_MASK

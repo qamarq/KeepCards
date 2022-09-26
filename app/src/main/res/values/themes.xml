@@ -3,14 +3,18 @@
     <style name="Base.Theme.KeepCards" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:navigationBarColor">?attr/colorSurface</item>
-        <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeCloseDrawable">@drawable/ic_baseline_close_24</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.Material3.DynamicColors.DayNight</item>
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_baseline_close_24</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.Material3.ActionBar</item>
     </style>
 
-    <style name="Theme.KeepCards" parent="Base.Theme.KeepCards" />
+    <style name="myActionBarBackground" parent="ThemeOverlay.Material3.Dark.ActionBar">
+        <!--        <item name="colorSurface">@color/background_material_dark</item>-->
+    </style>
+
+    <style name="Theme.KeepCards" parent="Base.Theme.KeepCards"/>
 
     <style name="ToolbarColoredBackArrow" parent="Base.Theme.KeepCards">
         <item name="android:textColorSecondary">@color/launcher_icon</item>

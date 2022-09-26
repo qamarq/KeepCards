@@ -1,6 +1,5 @@
 package com.qamarq.keepcards
 
-import android.R.attr.mode
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,15 +8,15 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.provider.MediaStore
 import android.provider.Settings
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ImageSpan
 import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
@@ -739,6 +738,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private var myActMode: ActionMode? = null
+    private var myActMenu: Menu? = null
     var selectedItems: MutableList<View> = mutableListOf()
 
     private fun makeCardLayout() {
@@ -805,23 +805,22 @@ class HomeActivity : AppCompatActivity() {
                     mainCard.setOnClickListener {
                         if (myActMode != null) {
                             if (selectedItems.contains(v)) {
-//                                val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
-//                                val typeCard: TextView = v.findViewById<View>(R.id.card_type) as TextView
-//                                if (typeCard.text == "barcode") {
-//                                    iconCard.setImageResource(R.drawable.ic_barcode_fill0_wght400_grad0_opsz48)
-//                                } else {
-//                                    iconCard.setImageResource(R.drawable.ic_qr_code_2_fill0_wght400_grad0_opsz48)
-//                                }
                                 mainCard.isChecked = false
                                 selectedItems.remove(v)
                             } else {
                                 mainCard.isChecked = true
-//                                val iconCard: ImageView = v.findViewById<View>(R.id.card_icon) as ImageView
-//                                iconCard.setImageResource(R.drawable.ic_baseline_check_circle_24)
                                 selectedItems.add(v)
                             }
                             if (selectedItems.isNotEmpty()) {
                                 myActMode?.title = "Wybrano "+selectedItems.count()
+                                if (selectedItems.count() > 1) {
+                                    myActMenu?.removeItem(R.id.share)
+                                } else {
+//                                    myActMenu?.add(0,R.id.share,0,menuIconWithText(resources.getDrawable(R.drawable.ic_outline_share_24), resources.getString(R.string.share_title)))
+                                    myActMenu?.add(0,R.id.share,1,"Share")
+                                    val item: MenuItem? = myActMenu?.findItem(R.id.share)
+                                    item?.setIcon(R.drawable.ic_outline_share_24)
+                                }
                             } else {
                                 myActMode?.finish()
                             }
@@ -844,9 +843,6 @@ class HomeActivity : AppCompatActivity() {
                             return@OnLongClickListener false
                         }
                         myActMode = startSupportActionMode(myActModeCallback)
-                        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(android.R.color.transparent)))
-                        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_close_24)
-                        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_close_24)
                         true
                     })
                     val titleCard: TextView = v.findViewById<View>(R.id.shop_title) as TextView
@@ -895,11 +891,20 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
+    private fun menuIconWithText(r: Drawable, title: String): CharSequence {
+        r.setBounds(0, 0, r.intrinsicWidth, r.intrinsicHeight)
+        val sb = SpannableString("    $title")
+        val imageSpan = ImageSpan(r, ImageSpan.ALIGN_BOTTOM)
+        sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        return sb
+    }
+
     val myActModeCallback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-            topAppBar.visibility = View.GONE
             mode?.menuInflater?.inflate(R.menu.contextual_home_menu, menu)
             mode?.title = "Wybrano "+selectedItems.count()
+            myActMenu = menu
+//            mode?.customView = layoutInflater.inflate(R.layout.component_actionbar, null)
             return true
         }
 
@@ -961,7 +966,6 @@ class HomeActivity : AppCompatActivity() {
                                     for (deleteSnapshot in dataSnapshot.children) {
                                         println(itemsToDelete)
                                         if (itemsToDelete.contains(deleteSnapshot.key)) {
-                                            println("fdshkjfdhsfhjdsjfdsjkhf")
                                             deleteSnapshot.ref.removeValue()
                                         }
                                     }
@@ -976,20 +980,46 @@ class HomeActivity : AppCompatActivity() {
                         .show()
                     true
                 }
+                R.id.share -> {
+                    if (selectedItems.count() == 1) {
+                        selectedItems.forEach {
+                            val titleCard: TextView =
+                                it.findViewById<View>(R.id.shop_title) as TextView
+                            val numberCard: TextView =
+                                it.findViewById<View>(R.id.card_number) as TextView
+                            val typeCard: TextView =
+                                it.findViewById<View>(R.id.card_type) as TextView
+                            val sendShop = titleCard.text.toString()
+                            val sendClientId = numberCard.text.toString()
+                            val cardType = typeCard.text.toString()
+                            var linkSendShop = sendShop.replace(" ", "+")
+                            val link =
+                                "https://keepcards.page.link/?link=https://keepcards-qamarq.firebaseapp.com/?type%3Dadd_card%26shop_name%3D$linkSendShop%26clientId%3D$sendClientId%26cardType%3D$cardType&apn=com.qamarq.keepcards"
+                            val intent = Intent(Intent.ACTION_SEND)
+                            intent.type = "text/plain"
+                            intent.putExtra(
+                                Intent.EXTRA_TEXT,
+                                getString(R.string.link_add_card_send, sendShop, link)
+                            )
+                            startActivity(Intent.createChooser(intent, getString(R.string.share_title)))
+                            mode?.finish()
+                        }
+                    } else {
+                        Toast.makeText(this@HomeActivity, "Nie możesz mieć dwóch zaznaczonych opcji jednoczenie", Toast.LENGTH_SHORT).show()
+                    }
+                    true
+                }
                 else -> false
             }
         }
 
         override fun onDestroyActionMode(mode: ActionMode?) {
             myActMode = null
-            Handler(Looper.getMainLooper()).postDelayed({
-                topAppBar.visibility = View.VISIBLE
-                selectedItems.forEach {
-                    val mainCard: MaterialCardView = it.findViewById<View>(R.id.main_card) as MaterialCardView
-                    mainCard.isChecked = false
-                }
-                selectedItems.clear()
-            }, 320)
+            selectedItems.forEach {
+                val mainCard: MaterialCardView = it.findViewById<View>(R.id.main_card) as MaterialCardView
+                mainCard.isChecked = false
+            }
+            selectedItems.clear()
         }
     }
 

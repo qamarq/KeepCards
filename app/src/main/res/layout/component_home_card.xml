@@ -45,8 +45,9 @@
 
                 <ImageView
                     android:id="@+id/card_icon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="10dp"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/ic_barcode_fill0_wght400_grad0_opsz48"
                     app:tint="?attr/colorPrimary" />
@@ -56,7 +57,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:layout_marginStart="18dp">
                     <TextView
                         android:id="@+id/shop_title"
                         android:layout_width="match_parent"

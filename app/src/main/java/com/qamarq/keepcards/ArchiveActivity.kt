@@ -38,7 +38,6 @@ class ArchiveActivity : AppCompatActivity() {
                 var emptyData: Boolean = true
                 progressBarArchive.visibility = View.GONE
                 dynamicArchive.removeAllViews()
-                var lastCard: MaterialCardView? = null
                 dataSnapshot.children.forEach {
                     emptyData = false
                     val shop = it.child("shop").value.toString()
