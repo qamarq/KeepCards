@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.opengl.Visibility
 import android.os.Build
@@ -820,7 +821,7 @@ class HomeActivity : AppCompatActivity() {
                                 selectedItems.add(v)
                             }
                             if (selectedItems.isNotEmpty()) {
-                                myActMode?.title = "Zaznaczone: "+selectedItems.count()
+                                myActMode?.title = "Wybrano "+selectedItems.count()
                             } else {
                                 myActMode?.finish()
                             }
@@ -843,6 +844,9 @@ class HomeActivity : AppCompatActivity() {
                             return@OnLongClickListener false
                         }
                         myActMode = startSupportActionMode(myActModeCallback)
+                        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(android.R.color.transparent)))
+                        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_close_24)
+                        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_close_24)
                         true
                     })
                     val titleCard: TextView = v.findViewById<View>(R.id.shop_title) as TextView
@@ -895,7 +899,7 @@ class HomeActivity : AppCompatActivity() {
         override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
             topAppBar.visibility = View.GONE
             mode?.menuInflater?.inflate(R.menu.contextual_home_menu, menu)
-            mode?.title = "Zaznaczone: "+selectedItems.count()
+            mode?.title = "Wybrano "+selectedItems.count()
             return true
         }
 
@@ -1080,7 +1084,6 @@ class HomeActivity : AppCompatActivity() {
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
-
 
                     card.addView(titleText)
                     card.addView(descText)
