@@ -819,15 +819,15 @@ class HomeActivity : AppCompatActivity() {
                                 myActMode?.title = "Wybrano "+selectedItems.count()
                                 if (selectedItems.count() > 1) {
                                     myActMenu?.removeItem(R.id.share)
-                                    myActMenu?.removeItem(R.id.copy)
+//                                    myActMenu?.removeItem(R.id.copy)
                                 } else {
                                     myActMenu?.add(0,R.id.share,1,"Share")
                                     val item: MenuItem? = myActMenu?.findItem(R.id.share)
                                     item?.setIcon(R.drawable.ic_outline_share_24)
 
-                                    myActMenu?.add(0,R.id.copy,2,"Copy")
-                                    val item2: MenuItem? = myActMenu?.findItem(R.id.copy)
-                                    item2?.setIcon(R.drawable.ic_baseline_content_copy_24)
+//                                    myActMenu?.add(0,R.id.copy,2,"Copy")
+//                                    val item2: MenuItem? = myActMenu?.findItem(R.id.copy)
+//                                    item2?.setIcon(R.drawable.ic_baseline_content_copy_24)
                                 }
                             } else {
                                 myActMode?.finish()
@@ -1017,19 +1017,19 @@ class HomeActivity : AppCompatActivity() {
                     }
                     true
                 }
-                R.id.copy -> {
-                    if (selectedItems.count() == 1) {
-                        selectedItems.forEach {
-                            val numberCard: TextView =
-                                it.findViewById<View>(R.id.card_number) as TextView
-                            setClipboard(this@HomeActivity, numberCard.text.toString())
-                            Toast.makeText(this@HomeActivity, R.string.success_copy, Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(this@HomeActivity, "Nie możesz mieć dwóch zaznaczonych opcji jednoczenie", Toast.LENGTH_SHORT).show()
-                    }
-                    true
-                }
+//                R.id.copy -> {
+//                    if (selectedItems.count() == 1) {
+//                        selectedItems.forEach {
+//                            val numberCard: TextView =
+//                                it.findViewById<View>(R.id.card_number) as TextView
+//                            setClipboard(this@HomeActivity, numberCard.text.toString())
+//                            Toast.makeText(this@HomeActivity, R.string.success_copy, Toast.LENGTH_SHORT).show()
+//                        }
+//                    } else {
+//                        Toast.makeText(this@HomeActivity, "Nie możesz mieć dwóch zaznaczonych opcji jednoczenie", Toast.LENGTH_SHORT).show()
+//                    }
+//                    true
+//                }
                 else -> false
             }
         }

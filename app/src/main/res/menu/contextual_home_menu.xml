@@ -6,11 +6,11 @@
         android:title="Share"
         android:orderInCategory="1"
         android:icon="@drawable/ic_outline_share_24" />
-    <item
-        android:id="@+id/copy"
-        android:title="Copy"
-        android:orderInCategory="2"
-        android:icon="@drawable/ic_baseline_content_copy_24" />
+<!--    <item-->
+<!--        android:id="@+id/copy"-->
+<!--        android:title="Copy"-->
+<!--        android:orderInCategory="2"-->
+<!--        android:icon="@drawable/ic_baseline_content_copy_24" />-->
     <item
         android:id="@+id/archive"
         android:title="Archiwizuj"
