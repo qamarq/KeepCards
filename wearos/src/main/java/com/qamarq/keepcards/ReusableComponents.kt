@@ -350,7 +350,9 @@ fun ShowCardButtonArchive(
                 Icon(
                     imageVector = Icons.Rounded.Archive,
                     contentDescription = "Archive",
-                    modifier = Modifier.size(28.dp).wrapContentSize(align = Alignment.Center),
+                    modifier = Modifier
+                        .size(28.dp)
+                        .wrapContentSize(align = Alignment.Center),
                 )
             },
             title = { Text("Archiwizacja", textAlign = TextAlign.Center) },
@@ -456,7 +458,9 @@ fun ShowCardButtonDelete(
                 Icon(
                     imageVector = Icons.Rounded.Delete,
                     contentDescription = "Delete",
-                    modifier = Modifier.size(28.dp).wrapContentSize(align = Alignment.Center),
+                    modifier = Modifier
+                        .size(28.dp)
+                        .wrapContentSize(align = Alignment.Center),
                 )
             },
             title = { Text("Usuwanie", textAlign = TextAlign.Center) },
@@ -671,6 +675,43 @@ fun MainBottomChipSecondary(
 }
 
 @Composable
+fun MainBottomChipTertiary(
+    iconModifier: Modifier = Modifier,
+    name: String,
+    email: String
+) {
+    Chip(
+        modifier = Modifier
+            .padding(top = 13.dp)
+            .fillMaxWidth(),
+        onClick = {  },
+        enabled = true,
+        label = {
+            Text(
+                text = name,
+                maxLines = 2,
+                fontWeight = FontWeight.Medium,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+//        secondaryLabel = {
+//            Text(
+//                text = email
+//            )
+//        },
+        colors = ChipDefaults.gradientBackgroundChipColors(),
+        icon = {
+            Icon(
+//                bitmap = img.asImageBitmap(),
+                imageVector = Icons.Rounded.AccountCircle,
+                contentDescription = "triggers meditation action",
+                modifier = iconModifier
+            )
+        },
+    )
+}
+
+@Composable
 fun MainBottomButtons(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
@@ -823,7 +864,9 @@ fun TextSettings(modifier: Modifier = Modifier) {
 @Composable
 fun TextAppName() {
     Text(
-        modifier = Modifier.padding(bottom = 4.dp).fillMaxWidth(),
+        modifier = Modifier
+            .padding(bottom = 4.dp)
+            .fillMaxWidth(),
         textAlign = TextAlign.Center,
         text = stringResource(id = R.string.your_cards)
     )
@@ -855,6 +898,7 @@ fun NewCard(
                 )
             }
         },
+        enabled = true,
         appName = {
             if (type == "barcode") {
                 Text(stringResource(R.string.barcode))
@@ -1277,3 +1321,26 @@ fun ToggleChipExamplePreview() {
         )
     }
 }
+//
+//@Preview(
+//    group = "Chip",
+//    widthDp = WEAR_PREVIEW_ROW_WIDTH_DP,
+//    heightDp = WEAR_PREVIEW_ROW_HEIGHT_DP,
+//    apiLevel = WEAR_PREVIEW_API_LEVEL,
+//    uiMode = WEAR_PREVIEW_UI_MODE,
+//    backgroundColor = WEAR_PREVIEW_BACKGROUND_COLOR_BLACK,
+//    showBackground = WEAR_PREVIEW_SHOW_BACKGROUND
+//)
+//@Composable
+//fun ChipExamplePreview() {
+//    WearAppTheme {
+//        ChipAccount(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(bottom = 8.dp),
+//            iconModifier = Modifier
+//                .size(48.dp)
+//                .wrapContentSize(align = Alignment.Center)
+//        )
+//    }
+//}

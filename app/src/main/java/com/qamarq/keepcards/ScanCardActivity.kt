@@ -43,6 +43,7 @@ import com.google.zxing.qrcode.QRCodeWriter
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import com.onesignal.OneSignal
 import kotlinx.android.synthetic.main.activity_add.*
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_scan_card.*
 import kotlinx.android.synthetic.main.activity_scan_card.client_id_txt
 import kotlinx.android.synthetic.main.activity_scan_card.shop_name_txt
@@ -93,12 +94,26 @@ class ScanCardActivity : AppCompatActivity() {
 
         scanTopAppBar.title = curr_shop.capitalize()
         shop_title.text = curr_shop.capitalize()
-        client_id_desc.text = "Client ID: $curr_clientid"
+        client_id_desc.text = curr_clientid
         scanTopAppBar.setNavigationOnClickListener {
             restoreBrightness()
             val i = Intent(this@ScanCardActivity, HomeActivity::class.java)
             startActivity(i)
         }
+
+        nested_scanacti.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            if (scrollY > oldScrollY + 12 && full_fab.isExtended) {
+                full_fab.shrink()
+            }
+            if (scrollY < oldScrollY - 12 && !full_fab.isExtended) {
+                full_fab.extend()
+            }
+            if (scrollY == 0) {
+                full_fab.extend()
+            }
+        }
+
+        full_fab.setOnClickListener { openDialog() }
 
         scanTopAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {

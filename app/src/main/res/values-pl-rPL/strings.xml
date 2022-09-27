@@ -76,7 +76,8 @@
     <string name="scan_delete">Usuń</string>
     <string name="scan_copy">Skopiuj</string>
     <string name="scan_share">Udostępnij</string>
-    <string name="scan_fullscreen">Powiększ kod na cały ekran</string>
+    <string name="scan_fullscreen">Powiększ</string>
+    <string name="fab_full">Powiększ kartę</string>
     <string name="find_shop">Znajdź sklep</string>
     <string name="find_shop_desc">Znajdź najbliższy sklep dzięki Google Maps</string>
     <string name="googlemaps_open">Szukaj</string>

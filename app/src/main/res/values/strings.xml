@@ -93,7 +93,8 @@
     <string name="scan_delete">Delete</string>
     <string name="scan_copy">Copy</string>
     <string name="scan_share">Share</string>
-    <string name="scan_fullscreen">Enlarge the code</string>
+    <string name="scan_fullscreen">Enlarge</string>
+    <string name="fab_full">Enlarge the card</string>
     <string name="find_shop">Find shop</string>
     <string name="find_shop_desc">Find the closest store thanks to Google Maps</string>
     <string name="googlemaps_open">Find a Store</string>

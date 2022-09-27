@@ -2,6 +2,8 @@ package com.qamarq.keepcards
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -29,10 +31,12 @@ import androidx.wear.compose.material.*
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import com.google.android.gms.tasks.Tasks
 import com.google.android.gms.wearable.*
 import com.google.android.gms.wearable.DataClient.OnDataChangedListener
 import com.qamarq.keepcards.theme.WearAppTheme
 import kotlinx.coroutines.*
+import java.io.InputStream
 import kotlin.coroutines.CoroutineContext
 
 
@@ -40,6 +44,7 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
     private val sharedPrefFile = "keepcardspref"
     var datapath = "/data_path"
     var connected = false
+    var profileImg: Bitmap? = null
     @Composable
     fun Navigation() {
         val navController = rememberSwipeDismissableNavController()
@@ -132,8 +137,10 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
             if (state) {
                 setContent { SplashActivity(true) }
                 Handler(Looper.getMainLooper()).postDelayed({
+//                    val time = System.currentTimeMillis()
+//                    sendData(this, "give_me_cards|$time")
                     val time = System.currentTimeMillis()
-                    sendData(this, "give_me_cards|$time")
+                    sendData(this, "get_profile|$time")
                 }, 500)
             } else {
                 setContent { Navigation() }
@@ -224,9 +231,14 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
                             item { NewEmptyCard(contentModifier, iconModifier, "empty", this@MainActivity) }
                         }
                     }
+                    val sharedPreferences: SharedPreferences = this@MainActivity.getSharedPreferences(sharedPrefFile,
+                        Context.MODE_PRIVATE)
+                    val globalUsername = sharedPreferences.getString("userName", "").toString()
+                    val globalEmail = sharedPreferences.getString("userEmail", "").toString()
 //                    item { MainBottomButtons(firstItemModifier, iconModifier, navController, this@MainActivity, connected) }
                     item { MainBottomChipPrimary(iconModifier, this@MainActivity, connected) }
                     item { MainBottomChipSecondary(iconModifier, navController) }
+                    item { MainBottomChipTertiary(iconModifier, globalUsername, globalEmail) }
                 }
             }
         }
@@ -282,20 +294,44 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
                 if (datapath == path) {
                     val dataMapItem = DataMapItem.fromDataItem(event.dataItem)
                     val message = dataMapItem.dataMap.getString("message")
-                    val editor:SharedPreferences.Editor = sharedPreferences.edit()
+                    val editor: SharedPreferences.Editor = sharedPreferences.edit()
 //                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                     if (message != null) {
-                        val commands = listOf("give_me_cards", "add_card", "open_card", "check_connection", "check_update", "archive_card", "delete_card")
+                        val commands = listOf(
+                            "give_me_cards",
+                            "add_card",
+                            "open_card",
+                            "check_connection",
+                            "check_update",
+                            "archive_card",
+                            "delete_card"
+                        )
                         for (command in commands) {
                             if (message.contains(command)) return
                         }
-                        if (message.contains("connection_success")) {connected = true; return}
+                        if (message.contains("connection_success")) {
+                            connected = true; return
+                        }
                     }
-                    editor.putString("storedCards",message)
+                    editor.putString("storedCards", message)
                     editor.apply()
                     Handler(Looper.getMainLooper()).postDelayed({
                         setContent { Navigation() }
                     }, 500)
+                } else if (path == "/user_data"){
+                    val dataMapItem = DataMapItem.fromDataItem(event.dataItem)
+                    val message = dataMapItem.dataMap.getString("message")
+                    val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                    val currentShop = message?.split("|")
+                    currentShop?.forEachIndexed { index, txt ->
+                        when (index) {
+                            0 -> {editor.putString("userName",txt)}
+                            1 -> {editor.putString("userEmail",txt)}
+                        }
+                    }
+                    editor.apply()
+                    val time = System.currentTimeMillis()
+                    sendData(this, "give_me_cards|$time")
                 } else {
                     Log.e(TAG, "Unrecognized path: $path")
                 }
@@ -304,6 +340,21 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
             } else {
                 Log.e(TAG, "Unknown data event Type = " + event.type)
             }
+        }
+    }
+
+    private fun loadBitmapFromAsset(asset: Asset): Bitmap? {
+        // convert asset into a file descriptor and block until it's ready
+        val assetInputStream: InputStream? =
+            Tasks.await(Wearable.getDataClient(this).getFdForAsset(asset))
+                ?.inputStream
+
+        return assetInputStream?.let { inputStream ->
+            // decode the stream into a bitmap
+            BitmapFactory.decodeStream(inputStream)
+        } ?: run {
+            Log.w(TAG, "Requested an unknown Asset.")
+            null
         }
     }
 

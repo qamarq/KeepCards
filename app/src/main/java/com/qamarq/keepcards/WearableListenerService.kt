@@ -4,6 +4,8 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
@@ -16,6 +18,7 @@ import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.io.ByteArrayOutputStream
 
 class DataLayerListenerService : WearableListenerService() {
     var datapath = "/data_path"
@@ -125,6 +128,13 @@ class DataLayerListenerService : WearableListenerService() {
                         } else if ("check_connection" in message) {
                             val time = System.currentTimeMillis()
                             sendData("connection_success|$time")
+                        } else if ("get_profile" in message) {
+                            val time = System.currentTimeMillis()
+                            val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile,
+                                Context.MODE_PRIVATE)
+                            val globalUsername = sharedPreferences.getString("globalUsername", "")
+                            val globalEmail = sharedPreferences.getString("globalEmail", "")
+                            sendData("$globalUsername|$globalEmail|$time", "/user_data")
                         }
                     }
                 } else {
@@ -168,11 +178,32 @@ class DataLayerListenerService : WearableListenerService() {
         }
     }
 
-    private fun sendData(message: String) {
-        val dataMap = PutDataMapRequest.create(datapath)
+    private fun sendData(message: String, path: String = datapath) {
+        val dataMap = PutDataMapRequest.create(path)
         dataMap.dataMap.putString("message", message)
         val request = dataMap.asPutDataRequest()
         request.setUrgent()
+        val dataItemTask = Wearable.getDataClient(this).putDataItem(request)
+        dataItemTask
+            .addOnSuccessListener { dataItem ->
+                Log.d(
+                    TAG,
+                    "Sending message was successful: $dataItem"
+                )
+            }
+            .addOnFailureListener { e -> Log.e(TAG, "Sending message failed: $e") }
+    }
+    private fun createAssetFromBitmap(bitmap: Bitmap): Asset =
+        ByteArrayOutputStream().let { byteStream ->
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteStream)
+            Asset.createFromBytes(byteStream.toByteArray())
+        }
+    private fun sendImage(img: Int) {
+        val asset: Asset = createAssetFromBitmap(BitmapFactory.decodeResource(resources, img))
+        val request: PutDataRequest = PutDataMapRequest.create(datapath).run {
+            dataMap.putAsset("profileImage", asset)
+            asPutDataRequest()
+        }
         val dataItemTask = Wearable.getDataClient(this).putDataItem(request)
         dataItemTask
             .addOnSuccessListener { dataItem ->
