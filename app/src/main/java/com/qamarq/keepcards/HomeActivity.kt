@@ -20,11 +20,8 @@ import android.text.SpannableString
 import android.text.style.ImageSpan
 import android.util.Log
 import android.util.TypedValue
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.view.View.OnLongClickListener
-import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
@@ -85,9 +82,27 @@ class HomeActivity : AppCompatActivity() {
     data class newCard(val clientid: String? = null, val type: String? = null, val shop: String? = null) {}
 
     private val database = Firebase.database.reference
+    private var cardReady: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        val content: View = findViewById(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    // Check if the initial data is ready.
+                    return if (cardReady) {
+                        // The content is ready; start drawing.
+                        content.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else {
+                        // The content is not ready; suspend.
+                        false
+                    }
+                }
+            }
+        )
 
         var fabActualMode = "home"
 
@@ -902,6 +917,7 @@ class HomeActivity : AppCompatActivity() {
                     layoutSpace.layoutParams = param
                     dynamic.addView(layoutSpace)
                 }
+                cardReady = true
             }
 
             override fun onCancelled(error: DatabaseError) {
