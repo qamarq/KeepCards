@@ -702,7 +702,7 @@ fun MainBottomChipTertiary(
         colors = ChipDefaults.gradientBackgroundChipColors(),
         icon = {
             Icon(
-//                bitmap = img.asImageBitmap(),
+//                bitmap = profile.asImageBitmap(),
                 imageVector = Icons.Rounded.AccountCircle,
                 contentDescription = "triggers meditation action",
                 modifier = iconModifier

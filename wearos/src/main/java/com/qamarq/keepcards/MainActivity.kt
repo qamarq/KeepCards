@@ -11,7 +11,6 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.ViewConfiguration
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.gestures.scrollBy

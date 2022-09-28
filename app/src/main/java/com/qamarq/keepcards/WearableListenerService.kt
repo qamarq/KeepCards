@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Base64
 import android.util.Log
 import android.widget.Toast
 import androidx.preference.PreferenceManager
@@ -134,7 +135,8 @@ class DataLayerListenerService : WearableListenerService() {
                                 Context.MODE_PRIVATE)
                             val globalUsername = sharedPreferences.getString("globalUsername", "")
                             val globalEmail = sharedPreferences.getString("globalEmail", "")
-                            sendData("$globalUsername|$globalEmail|$time", "/user_data")
+                            val globalProfilePicBase64 = sharedPreferences.getString("globalProfilePicBase64", "")
+                            sendData("$globalUsername|$globalEmail|$globalProfilePicBase64|$time", "/user_data")
                         }
                     }
                 } else {
@@ -146,6 +148,10 @@ class DataLayerListenerService : WearableListenerService() {
                 Log.e(TAG, "Unknown data event Type = " + event.type)
             }
         }
+    }
+
+    override fun onMessageReceived(messageEvent: MessageEvent) {
+        Toast.makeText(this@DataLayerListenerService, messageEvent.path, Toast.LENGTH_SHORT).show()
     }
 
     private fun sendCardsToWatch() {

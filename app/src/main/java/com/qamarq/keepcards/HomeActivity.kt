@@ -9,7 +9,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -18,6 +17,7 @@ import android.provider.Settings
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ImageSpan
+import android.util.Base64
 import android.util.Log
 import android.util.TypedValue
 import android.view.*
@@ -49,7 +49,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.ktx.storage
 import com.onesignal.OneSignal
-import kotlinx.android.synthetic.main.activity_archive.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_home_account.*
 import kotlinx.android.synthetic.main.fragment_home_cards.*
@@ -766,14 +765,20 @@ class HomeActivity : AppCompatActivity() {
     private fun makeCardLayout() {
         val storage = Firebase.storage
         val userId = Firebase.auth.currentUser?.uid
-        var my_image: Bitmap?
+        val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile,
+            Context.MODE_PRIVATE)
+        var my_image: Bitmap
         val ref = storage.reference.child("profiles/$userId/avatar.jpg")
         try {
             val localFile: File = File.createTempFile("Images", "bmp")
             ref.getFile(localFile)
                 .addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
                     my_image = BitmapFactory.decodeFile(localFile.absolutePath)
-                    my_image?.circularIt(applicationContext)?.apply {
+                    val base64String: String = ImageUtil.convert(my_image)
+                    val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+                    editor.putString("globalProfilePicBase64",base64String)
+                    editor.apply()
+                    my_image.circularIt(applicationContext).apply {
                         navDrawerProfilePic.setImageDrawable(this)
                         avatar_imgview.setImageDrawable(this)
                     }
@@ -792,8 +797,12 @@ class HomeActivity : AppCompatActivity() {
                                         resource: Bitmap,
                                         transition: Transition<in Bitmap?>?
                                     ) {
+                                        val base64String: String = ImageUtil.convert(resource)
+                                        val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+                                        editor.putString("globalProfilePicBase64",base64String)
+                                        editor.apply()
                                         my_image = resource
-                                        my_image?.circularIt(applicationContext)?.apply {
+                                        my_image.circularIt(applicationContext)?.apply {
                                             navDrawerProfilePic.setImageDrawable(this)
                                             avatar_imgview.setImageDrawable(this)
                                             saveProfileData(resource)
@@ -810,8 +819,6 @@ class HomeActivity : AppCompatActivity() {
 
         val database = Firebase.database.reference
         dynamic.orientation = LinearLayout.VERTICAL
-        val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile,
-            Context.MODE_PRIVATE)
         database.child("users").child(userId.toString()).child("cards").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var emptyData: Boolean = true
@@ -924,6 +931,23 @@ class HomeActivity : AppCompatActivity() {
                 Log.d("TAG", error.message)
             }
         })
+    }
+
+    object ImageUtil {
+        @Throws(IllegalArgumentException::class)
+        fun convert(base64Str: String): Bitmap {
+            val decodedBytes: ByteArray = Base64.decode(
+                base64Str.substring(base64Str.indexOf(",") + 1),
+                Base64.DEFAULT
+            )
+            return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+        }
+
+        fun convert(bitmap: Bitmap): String {
+            val outputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+            return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
+        }
     }
 
     private fun changeImageCard(resId: Int, imgView: ImageView) {
