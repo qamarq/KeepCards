@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/main_card"
+        style="?attr/materialCardViewElevatedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkable="true"
+        android:focusable="true"
+        app:checkedIcon="@drawable/ic_baseline_check_circle_24"
+        app:checkedIconTint="@android:color/transparent"
+        android:clickable="true"
+        android:layout_margin="7dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="55dp"-->
+<!--                    android:layout_height="55dp"-->
+<!--                    android:gravity="center"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:background="@drawable/icon_cards_bg"-->
+<!--                    android:padding="16dp">-->
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/scan_img"-->
+<!--                        android:layout_width="35dp"-->
+<!--                        android:layout_height="35dp"-->
+<!--                        android:scaleType="center"-->
+<!--                        app:srcCompat="@drawable/ic_qr_code_2_fill0_wght400_grad0_opsz48"-->
+<!--                        app:tint="?attr/background" />-->
+<!--                </LinearLayout>-->
+
+                <ImageView
+                    android:id="@+id/card_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="7dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_baseline_fingerprint_24"
+                    app:tint="?attr/colorPrimary" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="19dp">
+                    <TextView
+                        android:id="@+id/shop_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Biedronka"
+                        android:textAppearance="?attr/textAppearanceTitleMedium" />
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.Material3.Chip.Assist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipIcon="@drawable/ic_outline_lock_24"
+                        android:clickable="false"
+                        android:checked="true"
+                        android:text="Zabezpieczona"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/card_type"
+                        android:visibility="gone"
+                        android:text="32464324f42756"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="?android:attr/textColorSecondary" />
+                </LinearLayout>
+
+<!--                <Button-->
+<!--                    style="@style/Widget.Material3.Button.Icon"-->
+<!--                    android:id="@+id/open_btn"-->
+<!--                    android:layout_width="50dp"-->
+<!--                    app:icon="@drawable/ic_baseline_open_in_new_24"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:text=""-->
+<!--                    />-->
+                <Button
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:id="@+id/open_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pokaż"
+                    />
+
+
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/client_id_desc"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="16dp"-->
+                <!--                    android:text="Karta jest zarchiwizowana. Co chcesz z nią zrobić?"-->
+                <!--                    android:textAppearance="?attr/textAppearanceBodyMedium"-->
+                <!--                    android:textColor="?android:attr/textColorSecondary" />-->
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -95,11 +95,11 @@
 <!--                    android:text=""-->
 <!--                    />-->
                 <Button
-                    style="@style/Widget.Material3.Button.TextButton"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:id="@+id/open_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pokaż kartę"
+                    android:text="Pokaż"
                     />
 
 

@@ -128,15 +128,14 @@ class DataLayerListenerService : WearableListenerService() {
                             })
                         } else if ("check_connection" in message) {
                             val time = System.currentTimeMillis()
-                            sendData("connection_success|$time")
+                            sendData("connection_success|$time", "/check_connection")
                         } else if ("get_profile" in message) {
                             val time = System.currentTimeMillis()
                             val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile,
                                 Context.MODE_PRIVATE)
                             val globalUsername = sharedPreferences.getString("globalUsername", "")
                             val globalEmail = sharedPreferences.getString("globalEmail", "")
-                            val globalProfilePicBase64 = sharedPreferences.getString("globalProfilePicBase64", "")
-                            sendData("$globalUsername|$globalEmail|$globalProfilePicBase64|$time", "/user_data")
+                            sendData("$globalUsername|$globalEmail|$time", "/user_data")
                         }
                     }
                 } else {

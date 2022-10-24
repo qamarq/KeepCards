@@ -89,6 +89,7 @@ class ScanCardActivity : AppCompatActivity() {
         val curr_shop = sharedPreferences.getString("curr_shop","").toString()
         val curr_type = sharedPreferences.getString("curr_type","").toString()
         val curr_clientid = sharedPreferences.getString("curr_clientid","").toString()
+        val privateCard = sharedPreferences.getBoolean("private_card",false)
 
         manageBrightness()
 
@@ -119,7 +120,8 @@ class ScanCardActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.delete -> {
                     val userId = Firebase.auth.currentUser?.uid
-                    val deleteQuery: Query = database.child("users").child(userId.toString()).child("cards").child(curr_clientid)
+                    val delQueryType = if (privateCard) "cards_private" else "cards"
+                    val deleteQuery: Query = database.child("users").child(userId.toString()).child(delQueryType).child(curr_clientid)
                     deleteQuery.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             for (deleteSnapshot in dataSnapshot.children) {

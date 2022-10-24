@@ -25,6 +25,9 @@ import android.view.View.OnLongClickListener
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.view.isVisible
@@ -49,7 +52,9 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.ktx.storage
 import com.onesignal.OneSignal
+import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_home.topAppBar
 import kotlinx.android.synthetic.main.fragment_home_account.*
 import kotlinx.android.synthetic.main.fragment_home_cards.*
 import kotlinx.android.synthetic.main.fragment_home_friends.*
@@ -59,10 +64,14 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.lang.Integer.min
+import java.util.concurrent.Executor
 
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private val sharedPrefFile = "keepcardspref"
     private val pickImage = 100
     private val UPDATE_REQ_CODE = 100
@@ -82,6 +91,8 @@ class HomeActivity : AppCompatActivity() {
 
     private val database = Firebase.database.reference
     private var cardReady: Boolean = false
+
+    private var biometricAvailable = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -102,6 +113,42 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         )
+
+        checkDeviceHasBiometric()
+        executor = ContextCompat.getMainExecutor(this)
+        biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(
+                    errorCode: Int,
+                    errString: CharSequence,
+                ) {
+                    super.onAuthenticationError(errorCode, errString)
+                    val contextView = findViewById<View>(android.R.id.content)
+                    if (errString == resources.getString(R.string.cancel)) {
+                        Snackbar.make(contextView, "Anulowano", Snackbar.LENGTH_SHORT)
+                            .setAnchorView(extended_fab)
+                            .show()
+                    } else {
+                        Snackbar.make(contextView, "$errString", Snackbar.LENGTH_SHORT)
+                            .setAnchorView(extended_fab)
+                            .show()
+                    }
+                }
+
+                override fun onAuthenticationSucceeded(
+                    result: BiometricPrompt.AuthenticationResult,
+                ) {
+                    super.onAuthenticationSucceeded(result)
+                    val i = Intent(this@HomeActivity, ScanCardActivity::class.java)
+                    startActivity(i)
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Potwierdź swoją tożsamość")
+            .setSubtitle("Aby otworzyć Bezpieczną Kartę")
+            .setNegativeButtonText(resources.getString(R.string.cancel))
+            .build()
 
         var fabActualMode = "home"
 
@@ -338,6 +385,35 @@ class HomeActivity : AppCompatActivity() {
         newCardListener()
         checkLinkInvitations()
         checkLinkAddCard()
+    }
+
+    private fun checkDeviceHasBiometric() {
+        val biometricManager = BiometricManager.from(this)
+        when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                biometricAvailable = true
+            }
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+                biometricAvailable = false
+
+            }
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                biometricAvailable = false
+
+            }
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+                        putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                            BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+                        )
+                    }
+                    startActivityForResult(enrollIntent, 100)
+                }
+
+                biometricAvailable = false
+            }
+        }
     }
 
     private fun setClipboard(context: Context, text: String) {
@@ -870,6 +946,7 @@ class HomeActivity : AppCompatActivity() {
                             editor.putString("curr_shop",shop)
                             editor.putString("curr_type",type)
                             editor.putString("curr_clientid",clientid)
+                            editor.putBoolean("private_card",false)
                             editor.apply()
                             val i = Intent(this@HomeActivity, ScanCardActivity::class.java)
                             startActivity(i)
@@ -904,6 +981,7 @@ class HomeActivity : AppCompatActivity() {
                         editor.putString("curr_shop",shop)
                         editor.putString("curr_type",type)
                         editor.putString("curr_clientid",clientid)
+                        editor.putBoolean("private_card",false)
                         editor.apply()
                         val i = Intent(this@HomeActivity, ScanCardActivity::class.java)
                         startActivity(i)
@@ -920,9 +998,68 @@ class HomeActivity : AppCompatActivity() {
                     layoutSpace.layoutParams =
                         LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                     val param = layoutSpace.layoutParams as ViewGroup.MarginLayoutParams
-                    param.setMargins(50,100,50,100)
+                    param.setMargins(50,20,50,40)
                     layoutSpace.layoutParams = param
                     dynamic.addView(layoutSpace)
+                }
+                cardReady = true
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("TAG", error.message)
+            }
+        })
+
+        dynamic_private.orientation = LinearLayout.VERTICAL
+        database.child("users").child(userId.toString()).child("cards_private").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var emptyData: Boolean = true
+                progressBar.visibility = View.GONE
+                dynamic_private.removeAllViews()
+                dataSnapshot.children.forEach {
+                    emptyData = false
+                    val shop = it.child("shop").value.toString()
+                    val type = it.child("type").value.toString()
+                    val clientid = it.child("clientid").value.toString()
+                    val v: View = layoutInflater.inflate(R.layout.component_home_card_private, null)
+                    val mainCard: MaterialCardView = v.findViewById<View>(R.id.main_card) as MaterialCardView
+                    mainCard.setOnClickListener {
+                        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                        editor.putString("curr_shop",shop)
+                        editor.putString("curr_type",type)
+                        editor.putString("curr_clientid",clientid)
+                        editor.putBoolean("private_card",true)
+                        editor.apply()
+                        biometricPrompt.authenticate(promptInfo)
+                    }
+                    val titleCard: TextView = v.findViewById<View>(R.id.shop_title) as TextView
+                    titleCard.text = shop.capitalize()
+                    val typeCard: TextView = v.findViewById<View>(R.id.card_type) as TextView
+                    typeCard.text = type
+                    val buttonOpen: Button = v.findViewById<View>(R.id.open_btn) as Button
+                    buttonOpen.setOnClickListener {
+                        val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+                        editor.putString("curr_shop",shop)
+                        editor.putString("curr_type",type)
+                        editor.putString("curr_clientid",clientid)
+                        editor.putBoolean("private_card",true)
+                        editor.apply()
+                        biometricPrompt.authenticate(promptInfo)
+                    }
+                    if (!biometricAvailable) {
+                        mainCard.isEnabled = false
+                        buttonOpen.isEnabled = false
+                    }
+                    dynamic_private.addView(v)
+                }
+                if (!emptyData) {
+                    val layoutSpace = LinearLayout(this@HomeActivity, null)
+                    layoutSpace.layoutParams =
+                        LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    val param = layoutSpace.layoutParams as ViewGroup.MarginLayoutParams
+                    param.setMargins(50,100,50,100)
+                    layoutSpace.layoutParams = param
+                    dynamic_private.addView(layoutSpace)
                 }
                 cardReady = true
             }

@@ -34,6 +34,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
+        android:id="@+id/main_add_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
@@ -115,31 +116,49 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/private_layout"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content">
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_beta"
+                style="@style/Widget.Material3.Chip.Suggestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:clickable="false"
+                android:checked="true"
+                android:text="Beta"/>
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/private_switch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:checked="false"
+                android:text="Dodaj jako prywatną kartę"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/cancelBtn"
-                style="@style/Widget.Material3.Button.ElevatedButton.Icon"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="@string/cancel"
-                app:icon="@drawable/ic_baseline_close_24" />
-
+            android:orientation="vertical">
             <Button
                 android:id="@+id/acceptBtn"
-                style="@style/Widget.Material3.Button.Icon"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="@string/done_fab"
-                app:icon="@drawable/ic_outline_done_outline_24" />
+                style="@style/Widget.Material3.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/done_fab" />
+
+<!--            <Button-->
+<!--                android:id="@+id/cancelBtn"-->
+<!--                style="@style/Widget.Material3.Button.ElevatedButton"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/cancel" />-->
         </LinearLayout>
     </LinearLayout>
 

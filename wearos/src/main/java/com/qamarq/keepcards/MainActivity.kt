@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.ViewConfiguration
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.gestures.scrollBy
@@ -49,7 +50,6 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
         val navController = rememberSwipeDismissableNavController()
         val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile,
             Context.MODE_PRIVATE)
-        val storedCards = sharedPreferences.getString("storedCards","").toString()
         SwipeDismissableNavHost(navController = navController, startDestination = Screen.MainScreen.route) {
             composable(route = Screen.SplashScreen.route) {
                 window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
 
             composable(route = Screen.MainScreen.route) {
                 window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-                MainScreen(message = storedCards, navController = navController)
+                MainScreen(message = sharedPreferences.getString("storedCards","").toString(), navController = navController)
             }
 
             composable(route = Screen.SettingsScreen.route) {
@@ -136,9 +136,8 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
             if (state) {
                 setContent { SplashActivity(true) }
                 Handler(Looper.getMainLooper()).postDelayed({
-//                    val time = System.currentTimeMillis()
-//                    sendData(this, "give_me_cards|$time")
                     val time = System.currentTimeMillis()
+                    sendData(this, "give_me_cards|$time")
                     sendData(this, "get_profile|$time")
                 }, 500)
             } else {
@@ -230,8 +229,6 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
                             item { NewEmptyCard(contentModifier, iconModifier, "empty", this@MainActivity) }
                         }
                     }
-                    val sharedPreferences: SharedPreferences = this@MainActivity.getSharedPreferences(sharedPrefFile,
-                        Context.MODE_PRIVATE)
                     val globalUsername = sharedPreferences.getString("userName", "").toString()
                     val globalEmail = sharedPreferences.getString("userEmail", "").toString()
 //                    item { MainBottomButtons(firstItemModifier, iconModifier, navController, this@MainActivity, connected) }
@@ -308,9 +305,9 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
                         for (command in commands) {
                             if (message.contains(command)) return
                         }
-                        if (message.contains("connection_success")) {
-                            connected = true; return
-                        }
+//                        if (message.contains("connection_success")) {
+//                            connected = true; return
+//                        }
                     }
                     editor.putString("storedCards", message)
                     editor.apply()
@@ -329,6 +326,10 @@ class MainActivity : ComponentActivity(), OnDataChangedListener, CoroutineScope 
                         }
                     }
                     editor.apply()
+//                    val time = System.currentTimeMillis()
+//                    sendData(this, "give_me_cards|$time")
+                } else if (path == "/check_connection"){
+                    connected = true
                     val time = System.currentTimeMillis()
                     sendData(this, "give_me_cards|$time")
                 } else {
